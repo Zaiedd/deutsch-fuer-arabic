@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعلم الألمانية بالعربية | Deutsch für Araber</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=UnifrakturMaguntia&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <button class="nav-logo" onclick="switchPage('vocab')">
+    <div class="flag-strip"><span></span><span></span><span></span></div>
+    <span class="nav-logo-text">Deutsch <em>للعرب</em></span>
+  </button>
+  <div class="nav-links">
+    <button id="navBtn-vocab" class="active" onclick="switchPage('vocab')">المفردات</button>
+    <button id="navBtn-grammar" onclick="switchPage('grammar')">القواعد</button>
+    <button id="navBtn-listening" onclick="switchPage('listening')">الاستماع</button>
+    <button id="navBtn-reading" onclick="switchPage('reading')">القراءة</button>
+    <button id="navBtn-blog" onclick="switchPage('blog')">المدونة</button>
+  </div>
+</nav>
+
+<div class="page active" id="page-vocab">
+<section class="hero">
+  <div class="hero-de">Deutsch lernen</div>
+  <div class="hero-ar">تعلّم الألمانية بطريقة احترافية</div>
+  <div class="hero-sub">دروس منظمة حسب المستويات الأوروبية (CEFR) مع الترجمة العربية والأمثلة</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>261</strong><span>كلمة</span></div>
+    <div class="hero-stat"><strong>6</strong><span>مستويات</span></div>
+    <div class="hero-stat"><strong>23</strong><span>تصنيف</span></div>
+  </div>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.querySelector('#page-vocab .levels-section').scrollIntoView({behavior:'smooth'})">ابدأ التعلم الآن</button>
+    <button class="btn-secondary" onclick="switchPage('listening')">دروس الاستماع</button>
+  </div>
+</section>
+
+<div class="features">
+  <div class="features-grid">
+    <div class="feature"><div class="feature-icon">🎯</div><div class="feature-text"><h4>مرتبة بالمستوى</h4><p>من مبتدئ A1 حتى إتقان C2 حسب الإطار الأوروبي</p></div></div>
+    <div class="feature"><div class="feature-icon">🏷️</div><div class="feature-text"><h4>المادة (der/die/das)</h4><p>لون مختلف لكل مادة عشان تحفظها بسهولة</p></div></div>
+    <div class="feature"><div class="feature-icon">💬</div><div class="feature-text"><h4>أمثلة في الجمل</h4><p>كل كلمة مع مثال عملي يوضح استخدامها</p></div></div>
+    <div class="feature"><div class="feature-icon">✅</div><div class="feature-text"><h4>تتبع التقدم</h4><p>علّم الكلمات اللي حفظتها وتابع تقدمك</p></div></div>
+  </div>
+</div>
+
+<section class="levels-section">
+  <h2 class="section-title">اختر مستواك</h2>
+  <p class="section-sub">الإطار الأوروبي المرجعي العام للغات (CEFR)</p>
+  <div class="level-tabs" id="vocabLevelTabs">
+    <button class="level-tab active" onclick="setVocabLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
+    <button class="level-tab" onclick="setVocabLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
+    <button class="level-tab" onclick="setVocabLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
+    <button class="level-tab" onclick="setVocabLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
+    <button class="level-tab" onclick="setVocabLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
+    <button class="level-tab" onclick="setVocabLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
+  </div>
+</section>
+
+<div class="progress-label" id="progressLabel"></div>
+<div class="progress-bar" style="margin:0 auto 0;max-width:1100px;padding:0 32px"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<div class="categories"><div class="cat-grid" id="catGrid"></div></div>
+
+<section class="words-section">
+  <div class="words-header">
+    <span class="words-count" id="wordsCount"></span>
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#9E9D97" stroke-width="1.5"/><path d="M11 11l3 3" stroke="#9E9D97" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="ابحث عن كلمة..." oninput="renderWords()">
+    </div>
+  </div>
+  <div class="words-grid" id="wordsGrid"></div>
+</section>
+</div>
+
+<div class="page" id="page-grammar">
+  <div class="page-banner">
+    <div class="page-banner-icon">📖</div>
+    <h1>قواعد اللغة الألمانية</h1>
+    <p>شرح مبسّط بالعربي مع جداول وأمثلة عملية</p>
+  </div>
+  <div class="levels-section" style="padding-top:32px">
+    <div class="level-tabs" id="gramLevelTabs">
+      <button class="level-tab active" onclick="setGramLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
+      <button class="level-tab" onclick="setGramLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
+      <button class="level-tab" onclick="setGramLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
+      <button class="level-tab" onclick="setGramLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
+      <button class="level-tab" onclick="setGramLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
+      <button class="level-tab" onclick="setGramLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
+    </div>
+  </div>
+  <div class="content-wrap" id="gramContent" style="padding-top:0"></div>
+</div>
+
+<div class="page" id="page-listening">
+  <div class="page-banner">
+    <div class="page-banner-icon">🎧</div>
+    <h1>دروس الاستماع</h1>
+    <p>استمع للنطق الصحيح مباشرة من متصفحك</p>
+  </div>
+  <div class="levels-section" style="padding-top:32px">
+    <div class="level-tabs" id="listenLevelTabs">
+      <button class="level-tab active" onclick="setListenLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
+      <button class="level-tab" onclick="setListenLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
+      <button class="level-tab" onclick="setListenLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
+      <button class="level-tab" onclick="setListenLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
+      <button class="level-tab" onclick="setListenLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
+      <button class="level-tab" onclick="setListenLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
+    </div>
+  </div>
+  <div class="content-wrap" id="listenContent" style="padding-top:0">
+    <div class="listen-notice">
+      <span>🔊</span>
+      <span>الاستماع بيشتغل بصوت الكمبيوتر (Web Speech API) لنطق ألماني حقيقي. لو الصوت مش شغال، جرّب متصفح Chrome أو تأكد إن صوت الجهاز مش مكتوم.</span>
+    </div>
+    <div id="listenList"></div>
+  </div>
+</div>
+
+<div class="page" id="page-reading">
+  <div class="page-banner">
+    <div class="page-banner-icon">📚</div>
+    <h1>نصوص للقراءة</h1>
+    <p>قصص قصيرة بالألماني مع الترجمة العربية جنب كل جملة</p>
+  </div>
+  <div class="levels-section" style="padding-top:32px">
+    <div class="level-tabs" id="readLevelTabs">
+      <button class="level-tab active" onclick="setReadLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
+      <button class="level-tab" onclick="setReadLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
+      <button class="level-tab" onclick="setReadLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
+      <button class="level-tab" onclick="setReadLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
+      <button class="level-tab" onclick="setReadLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
+      <button class="level-tab" onclick="setReadLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
+    </div>
+  </div>
+  <div class="content-wrap" id="readContent" style="padding-top:0"></div>
+</div>
+
+<div class="page" id="page-blog">
+  <div class="page-banner">
+    <div class="page-banner-icon">✍️</div>
+    <h1>المدونة</h1>
+    <p>مقالات ونصايح عملية لتعلم الألمانية</p>
+  </div>
+  <div class="content-wrap" id="blogContent"></div>
+</div>
+
+<footer class="site-footer">
+  صُنع بواسطة <strong>zaiedd</strong> &mdash; Deutsch للعرب
+</footer>
+
+<button class="ai-fab" id="aiFab" onclick="toggleAIChat()" title="المساعد الذكي">🤖</button>
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-head">
+    <div class="ai-head-title">🤖 المساعد الذكي</div>
+    <button class="ai-close" onclick="toggleAIChat()">✕</button>
+  </div>
+  <div class="ai-messages" id="aiMessages">
+    <div class="ai-msg bot">أهلاً! أنا مساعدك في تعلم الألماني 🇩🇪 اسألني عن أي كلمة، قاعدة نحوية، أو ترجمة جملة، أو اكتب جملة بالألماني وأنا أصححهالك.</div>
+  </div>
+  <div class="ai-input-row">
+    <input type="text" id="aiInput" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter')sendAIMessage()">
+    <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()">➤</button>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
