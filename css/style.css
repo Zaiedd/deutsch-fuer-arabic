@@ -6,6 +6,7 @@ body{font-family:'Noto Sans Arabic','Inter',sans-serif;background:var(--white);c
 .page.active{display:block}
 nav{position:sticky;top:0;z-index:100;background:var(--black);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:60px;border-bottom:3px solid var(--gold)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;background:none;border:none}
+.nav-logo-img{height:36px;width:36px;object-fit:contain;border-radius:8px}
 .flag-strip{display:flex;flex-direction:column;gap:2px;width:28px}
 .flag-strip span{display:block;height:6px;border-radius:1px}
 .flag-strip span:nth-child(1){background:#1a1a1a;border:1px solid #444}
@@ -17,7 +18,7 @@ nav{position:sticky;top:0;z-index:100;background:var(--black);display:flex;align
 .nav-links button{color:#ccc;text-decoration:none;font-size:13px;padding:6px 14px;border-radius:6px;transition:all .15s;background:none;border:none;cursor:pointer;font-family:inherit}
 .nav-links button:hover{background:#333;color:#fff}
 .nav-links button.active{background:var(--red);color:#fff}
-.hero{background:var(--black);padding:80px 32px 100px;text-align:center;position:relative;overflow:hidden}
+.hero{background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.85)),var(--black) url('../assets/hero.jpg') center/cover no-repeat;padding:80px 32px 100px;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1a1a1a 33%,var(--red) 33% 66%,var(--gold) 66%)}
 .hero-de{font-family:'UnifrakturMaguntia',serif;font-size:clamp(48px,8vw,90px);color:var(--gold);line-height:1;margin-bottom:16px;text-shadow:0 2px 20px rgba(255,206,0,0.2)}
 .hero-ar{font-size:clamp(18px,3vw,26px);color:#fff;font-weight:400;margin-bottom:8px}
