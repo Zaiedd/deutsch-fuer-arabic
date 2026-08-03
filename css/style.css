@@ -4,7 +4,7 @@
 body{font-family:'Noto Sans Arabic','Inter',sans-serif;background:var(--white);color:var(--text);min-height:100vh}
 .page{display:none}
 .page.active{display:block}
-nav{position:sticky;top:0;z-index:100;background:var(--black);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:60px;border-bottom:3px solid var(--gold)}
+nav{position:sticky;top:0;z-index:170;background:var(--black);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:60px;border-bottom:3px solid var(--gold)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;background:none;border:none}
 .nav-logo-img{height:36px;width:36px;object-fit:contain;border-radius:8px}
 .flag-strip{display:flex;flex-direction:column;gap:2px;width:28px}
@@ -287,7 +287,7 @@ body.no-scroll{overflow:hidden}
     display:flex;flex-direction:column;align-items:stretch;gap:2px;
     position:fixed;top:60px;right:0;left:0;
     background:var(--black);border-bottom:3px solid var(--gold);
-    padding:10px 16px 16px;z-index:150;
+    padding:10px 16px 16px;z-index:160;
     transform:translateY(-8px);opacity:0;pointer-events:none;
     transition:opacity .18s,transform .18s;
     max-height:calc(100vh - 60px);overflow-y:auto;
