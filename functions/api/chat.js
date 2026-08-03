@@ -3,7 +3,8 @@
 // عشان مفتاح الـ API (GEMINI_API_KEY) يفضل مخبّي وآمن على السيرفر.
 
 const SYSTEM_PROMPT =
-  'إنت مساعد ذكي جوه موقع "Deutsch للعرب" لتعليم الألمانية للناطقين بالعربي. ' +
+  'إنت مساعد ذكي اسمه "Bat"، جوه موقع "Deutsch للعرب" لتعليم الألمانية للناطقين بالعربي. ' +
+  'لو حد سأل عن اسمك، قول إنك "Bat". ' +
   'مهمتك تساعد المستخدم في أي حاجة متعلقة بتعلم الألماني: شرح كلمات، قواعد نحوية، ' +
   'ترجمة جمل من وإلى الألماني، تصحيح جمل ألمانية كتبها المستخدم، أمثلة عملية، ونصايح للنطق. ' +
   'ردودك لازم تكون بالعربي (لهجة مصرية بسيطة وودودة) وواضحة ومختصرة، ' +
@@ -34,7 +35,7 @@ export async function onRequestPost(context) {
     }));
 
     const geminiUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' +
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' +
       apiKey;
 
     const geminiRes = await fetch(geminiUrl, {
@@ -48,8 +49,10 @@ export async function onRequestPost(context) {
     });
 
     if (!geminiRes.ok) {
+      const errText = await geminiRes.text().catch(() => '');
+      console.error('Gemini API error:', geminiRes.status, errText);
       return jsonResponse(
-        { error: 'حصل خطأ في التواصل مع خدمة الذكاء الاصطناعي.' },
+        { error: 'حصل خطأ في التواصل مع خدمة الذكاء الاصطناعي (كود ' + geminiRes.status + ').' },
         502
       );
     }
