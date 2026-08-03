@@ -1,4 +1,27 @@
 // منطق الموقع: التنقل بين الصفحات، عرض المحتوى، والمساعد الذكي
+
+// ============ ICONS (SVG موحّد بدل الإيموجي) ============
+const ICONS = {
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>',
+  tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 3.5h5.9a2 2 0 0 1 2 2v5.9a2 2 0 0 1-.59 1.41l-8 8a2 2 0 0 1-2.82 0l-5.9-5.9a2 2 0 0 1 0-2.82l8-8a2 2 0 0 1 1.41-.59z"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10.5H9l-4 3.5v-3.5H4z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.2 12.3l2.6 2.6 5-5.4"/></svg>',
+  bookOpen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.2c2.3-.8 5-.6 8.5 1.3 3.5-1.9 6.2-2.1 8.5-1.3v13.2c-2.3-.8-5-.6-8.5 1.3-3.5-1.9-6.2-2.1-8.5-1.3z"/><path d="M12 6.5v13.2"/></svg>',
+  headphones: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4.5" height="6" rx="1.5"/><rect x="16.5" y="14" width="4.5" height="6" rx="1.5"/></svg>',
+  library: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="5" height="16" rx="1"/><rect x="10" y="6.5" width="5" height="13.5" rx="1"/><path d="M16.5 6.7l3.6 1-3 12.6-3.6-1z"/></svg>',
+  pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l.9-4.2L16 4.7a1.8 1.8 0 0 1 2.6 0l.7.7a1.8 1.8 0 0 1 0 2.6L8.2 19.1z"/><path d="M14 6.8l3.2 3.2"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>',
+  hourglass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12M6 20.5h12M7 3.5v3.2a5 5 0 0 0 2 4l1.5 1.3-1.5 1.3a5 5 0 0 0-2 4v3.2M17 3.5v3.2a5 5 0 0 1-2 4l-1.5 1.3 1.5 1.3a5 5 0 0 1 2 4v3.2"/></svg>',
+  sparkles: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 3l1.6 4.7L18.3 9l-4.7 1.6L12 15.3l-1.6-4.7L5.7 9l4.7-1.3z"/><path d="M18.5 14.5l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8z"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5.5v13l11-6.5z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6.5" y="5.5" width="4" height="13" rx="1"/><rect x="13.5" y="5.5" width="4" height="13" rx="1"/></svg>',
+  chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.7L4 15.5M4 20v-4.5h4.5"/></svg>',
+  checkSmall: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l2.4 5.3 5.7.6-4.3 3.9 1.2 5.7L12 16.6l-5 2.9 1.2-5.7-4.3-3.9 5.7-.6z"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></svg>'
+};
+
 // ============ MOBILE MENU ============
 function toggleMobileMenu() {
   document.getElementById('navLinks').classList.toggle('open');
@@ -81,7 +104,7 @@ function getWords() {
 function toggleLearned(key, btn) {
   learnedWords[key] = !learnedWords[key];
   try { localStorage.setItem('dfa_learned', JSON.stringify(learnedWords)); } catch(e){}
-  btn.textContent = learnedWords[key] ? '✓ حفظتها' : '☆ حفظتها؟';
+  btn.innerHTML = '<span class="btn-icon">' + (learnedWords[key] ? ICONS.checkSmall : ICONS.star) + '</span> ' + (learnedWords[key] ? 'حفظتها' : 'حفظتها؟');
   btn.classList.toggle('learned', !!learnedWords[key]);
   updateProgress();
 }
@@ -105,7 +128,7 @@ function renderWords() {
   document.getElementById('wordsCount').textContent = words.length + ' كلمة';
 
   if (!words.length) {
-    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><h3>لا توجد نتائج</h3><p>جرّب كلمة بحث مختلفة</p></div>';
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">' + ICONS.search + '</div><h3>لا توجد نتائج</h3><p>جرّب كلمة بحث مختلفة</p></div>';
     return;
   }
 
@@ -123,8 +146,8 @@ function renderWords() {
         '<div class="card-ar">' + (w.ar || '') + '</div>' +
         '<div class="card-ex">' + (hasEx ? w.example : '<span class="no-example">لا يوجد مثال</span>') + '</div>' +
         '<div class="card-actions">' +
-          '<button class="card-btn" onclick="event.stopPropagation();flipCard(\'' + cardId + '\')">🔄 اقلب</button>' +
-          '<button class="card-btn ' + (isLearned ? 'learned' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + key + '\',this)">' + (isLearned ? '✓ حفظتها' : '☆ حفظتها؟') + '</button>' +
+          '<button class="card-btn" onclick="event.stopPropagation();flipCard(\'' + cardId + '\')"><span class="btn-icon">' + ICONS.refresh + '</span> اقلب</button>' +
+          '<button class="card-btn ' + (isLearned ? 'learned' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + key + '\',this)"><span class="btn-icon">' + (isLearned ? ICONS.checkSmall : ICONS.star) + '</span> ' + (isLearned ? 'حفظتها' : 'حفظتها؟') + '</button>' +
         '</div>' +
       '</div>' +
       '<div class="card-back" onclick="flipCard(\'' + cardId + '\')">' +
@@ -157,7 +180,7 @@ function renderGrammar() {
   const items = GRAMMAR[gramLevel] || [];
   const wrap = document.getElementById('gramContent');
   if (!items.length) {
-    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">🚧</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">' + ICONS.hourglass + '</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
     return;
   }
   wrap.innerHTML = items.map((item, i) => {
@@ -177,7 +200,7 @@ function renderGrammar() {
       '<div class="gram-head" onclick="toggleGram(' + i + ')">' +
         '<div class="gram-num">' + (i+1) + '</div>' +
         '<div class="gram-title">' + item.title + '</div>' +
-        '<div class="gram-arrow" id="garrow_' + i + '">▶</div>' +
+        '<div class="gram-arrow" id="garrow_' + i + '">' + ICONS.chevron + '</div>' +
       '</div>' +
       '<div class="gram-body" id="gbody_' + i + '">' +
         '<div class="gram-explain">' + item.explanation + '</div>' +
@@ -206,9 +229,9 @@ function speakGerman(text, btnId) {
   utter.lang = 'de-DE';
   utter.rate = 0.85;
   btn.classList.add('playing');
-  btn.textContent = '⏸';
-  utter.onend = () => { btn.classList.remove('playing'); btn.textContent = '▶'; };
-  utter.onerror = () => { btn.classList.remove('playing'); btn.textContent = '▶'; };
+  btn.innerHTML = ICONS.pause;
+  utter.onend = () => { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; };
+  utter.onerror = () => { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; };
   window.speechSynthesis.speak(utter);
 }
 function toggleListenAr(id) {
@@ -218,18 +241,18 @@ function renderListening() {
   const items = LISTENING[listenLevel] || [];
   const wrap = document.getElementById('listenList');
   if (!items.length) {
-    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">🚧</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">' + ICONS.hourglass + '</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
     return;
   }
   wrap.innerHTML = items.map((item, i) => {
     const btnId = 'lbtn_' + i;
     return '<div class="listen-card">' +
-      '<button class="listen-btn" id="' + btnId + '" onclick="speakGerman(\'' + item.de.replace(/'/g,"\\'") + '\',\'' + btnId + '\')">▶</button>' +
+      '<button class="listen-btn" id="' + btnId + '" onclick="speakGerman(\'' + item.de.replace(/'/g,"\\'") + '\',\'' + btnId + '\')">' + ICONS.play + '</button>' +
       '<div class="listen-text">' +
         '<div class="listen-de">' + item.de + '</div>' +
         '<div class="listen-ar" id="lar_' + i + '">' + item.ar + '</div>' +
       '</div>' +
-      '<button class="listen-toggle" onclick="toggleListenAr(' + i + ')">👁 الترجمة</button>' +
+      '<button class="listen-toggle" onclick="toggleListenAr(' + i + ')"><span class="btn-icon">' + ICONS.eye + '</span> الترجمة</button>' +
     '</div>';
   }).join('');
 }
@@ -246,14 +269,14 @@ function renderReading() {
   const items = READING[readLevel] || [];
   const wrap = document.getElementById('readContent');
   if (!items.length) {
-    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">🚧</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">' + ICONS.hourglass + '</div><h3>قريباً</h3><p>محتوى هذا المستوى قيد الإعداد</p></div>';
     return;
   }
   wrap.innerHTML = items.map(story => {
     const paras = story.paragraphs.map(p =>
       '<div class="read-para"><div class="read-de">' + p.de + '</div><div class="read-ar">' + p.ar + '</div></div>'
     ).join('');
-    return '<div class="read-card"><div class="read-title">📖 ' + story.title + '</div>' + paras + '</div>';
+    return '<div class="read-card"><div class="read-title">' + ICONS.bookOpen + ' ' + story.title + '</div>' + paras + '</div>';
   }).join('');
 }
 
@@ -271,9 +294,9 @@ function renderBlog() {
     const paras = post.content.map(p => '<p>' + p + '</p>').join('');
     return '<div class="blog-card">' +
       '<div class="blog-head" onclick="toggleBlog(' + i + ')">' +
-        '<div class="blog-icon">' + post.icon + '</div>' +
+        '<div class="blog-icon">' + ICONS.pen + '</div>' +
         '<div class="blog-info"><div class="blog-title">' + post.title + '</div><div class="blog-summary">' + post.summary + '</div></div>' +
-        '<div class="blog-arrow" id="barrow_' + i + '">▶</div>' +
+        '<div class="blog-arrow" id="barrow_' + i + '">' + ICONS.chevron + '</div>' +
       '</div>' +
       '<div class="blog-body" id="bbody_' + i + '">' + paras + '</div>' +
     '</div>';
