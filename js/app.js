@@ -1,10 +1,25 @@
 // منطق الموقع: التنقل بين الصفحات، عرض المحتوى، والمساعد الذكي
+// ============ MOBILE MENU ============
+function toggleMobileMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+  document.getElementById('navOverlay').classList.toggle('open');
+  document.getElementById('navBurger').classList.toggle('open');
+  document.body.classList.toggle('no-scroll');
+}
+function closeMobileMenu() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  document.getElementById('navBurger').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
 // ============ PAGE SWITCHING ============
 function switchPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
   document.getElementById('navBtn-' + name).classList.add('active');
+  closeMobileMenu();
   window.scrollTo({top:0, behavior:'smooth'});
   if (name === 'grammar' && !gramInit) { renderGrammar(); gramInit = true; }
   if (name === 'listening' && !listenInit) { renderListening(); listenInit = true; }

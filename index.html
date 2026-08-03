@@ -15,20 +15,23 @@
     <img src="assets/logo.png" alt="شعار Deutsch für Araber" class="nav-logo-img">
     <span class="nav-logo-text">Deutsch <em>للعرب</em></span>
   </button>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <button id="navBtn-vocab" class="active" onclick="switchPage('vocab')">المفردات</button>
     <button id="navBtn-grammar" onclick="switchPage('grammar')">القواعد</button>
     <button id="navBtn-listening" onclick="switchPage('listening')">الاستماع</button>
     <button id="navBtn-reading" onclick="switchPage('reading')">القراءة</button>
     <button id="navBtn-blog" onclick="switchPage('blog')">المدونة</button>
   </div>
+  <button class="nav-burger" id="navBurger" onclick="toggleMobileMenu()" aria-label="فتح القائمة">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-overlay" id="navOverlay" onclick="closeMobileMenu()"></div>
 
 <div class="page active" id="page-vocab">
 <section class="hero">
   <div class="hero-de">Deutsch lernen</div>
   <div class="hero-ar">تعلّم الألمانية بطريقة احترافية</div>
-  <div class="hero-sub">دروس منظمة حسب المستويات الأوروبية (CEFR) مع الترجمة العربية والأمثلة</div>
   <div class="hero-stats">
     <div class="hero-stat"><strong>261</strong><span>كلمة</span></div>
     <div class="hero-stat"><strong>6</strong><span>مستويات</span></div>
