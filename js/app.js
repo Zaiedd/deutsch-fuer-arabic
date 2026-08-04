@@ -35,6 +35,15 @@ function closeMobileMenu() {
   document.getElementById('navBurger').classList.remove('open');
   document.body.classList.remove('no-scroll');
 }
+// إغلاق القائمة عند الضغط في أي مكان برّاها (بدل الاعتماد على طبقة شفافة قابلة للضغط،
+// اللي ممكن تحجب أزرار القائمة نفسها حسب ترتيب الطبقات في بعض المتصفحات)
+document.addEventListener('click', function (e) {
+  const navLinks = document.getElementById('navLinks');
+  const navBurger = document.getElementById('navBurger');
+  if (!navLinks || !navLinks.classList.contains('open')) return;
+  if (navLinks.contains(e.target) || (navBurger && navBurger.contains(e.target))) return;
+  closeMobileMenu();
+});
 
 // ============ PAGE SWITCHING ============
 function switchPage(name) {
