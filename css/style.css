@@ -567,9 +567,7 @@ body.no-scroll{overflow:hidden}
 
 /* ============ Dark Mode ============ */
 [data-theme="dark"]{--black:#e0e0e0;--white:#121212;--gray1:#1e1e1e;--gray2:#333;--gray3:#888;--text:#e0e0e0;--text2:#a0a0a0}
-[data-theme="dark"] *{color:inherit}
 [data-theme="dark"] body{background:#121212;color:#e0e0e0}
-[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4,[data-theme="dark"] h5,[data-theme="dark"] h6,[data-theme="dark"] strong,[data-theme="dark"] b{color:#e0e0e0 !important}
 [data-theme="dark"] nav{background:#1a1a1a}
 [data-theme="dark"] nav button{color:#ccc}
 [data-theme="dark"] nav button.active{color:#fff}
