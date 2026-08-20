@@ -1,232 +1,245 @@
-// نظام بطاقات المفردات: مراجعة ب间隔 متكرر (Spaced Repetition)
+// ============================================
+// Deutsch fuer Araber - Flashcards System
+// With spaced repetition and flip animation
+// ============================================
 
-const Flashcards = {
-  _cards: [],
-  _currentIndex: 0,
-  _stats: { total: 0, known: 0, learning: 0, dontknow: 0 },
-  _startTime: null,
-  _containerId: null,
-  _answered: false,
+const Flashcards = (function() {
+  'use strict';
 
-  startSession(words, containerId) {
-    if (!words || !words.length) return false;
-    this._cards = this.shuffle(words);
-    this._currentIndex = 0;
-    this._stats = { total: this._cards.length, known: 0, learning: 0, dontknow: 0 };
-    this._startTime = Date.now();
-    this._containerId = containerId;
-    this._answered = false;
-    return true;
-  },
+  var cards = [];
+  var currentIndex = 0;
+  var stats = { total: 0, easy: 0, ok: 0, hard: 0 };
+  var startTime = null;
+  var answered = false;
 
-  getCurrentCard() {
-    if (this._currentIndex >= this._cards.length) return null;
-    return this._cards[this._currentIndex];
-  },
+  function init() {
+    var startBtn = document.getElementById('fc-start-btn');
+    var restartBtn = document.getElementById('fc-restart-btn');
+    var hardBtn = document.getElementById('fc-hard-btn');
+    var okBtn = document.getElementById('fc-ok-btn');
+    var easyBtn = document.getElementById('fc-easy-btn');
+    var container = document.getElementById('flashcard-container');
 
-  answer(type) {
-    if (this._answered || this._currentIndex >= this._cards.length) return;
-    this._answered = true;
-
-    const card = this._cards[this._currentIndex];
-    const level = Progress.level || 'A1';
-
-    if (type === 'know') {
-      this._stats.known++;
-      Progress.masterWord(Progress.load(), level, card.de);
-      const data = Progress.load();
-      Progress.addXP(data, 3);
-      Progress.save(data);
-    } else if (type === 'learning') {
-      this._stats.learning++;
-      const data = Progress.load();
-      Progress.learnWord(data, level, card.de);
-      Progress.addXP(data, 1);
-      Progress.save(data);
-    } else if (type === 'dontknow') {
-      this._stats.dontknow++;
-      const data = Progress.load();
-      Progress.learnWord(data, level, card.de);
-      Progress.save(data);
-    }
-  },
-
-  nextCard() {
-    this._answered = false;
-    this._currentIndex++;
-    return this._currentIndex < this._cards.length;
-  },
-
-  isFinished() {
-    return this._currentIndex >= this._cards.length;
-  },
-
-  getStats() {
-    return { ...this._stats };
-  },
-
-  getProgressPercent() {
-    if (!this._stats.total) return 0;
-    const answered = this._stats.known + this._stats.learning + this._stats.dontknow;
-    return Math.round((answered / this._stats.total) * 100);
-  },
-
-  getXP() {
-    return this._stats.known * 3 + this._stats.learning * 1;
-  },
-
-  renderCard(container) {
-    const card = this.getCurrentCard();
-    if (!card) {
-      this.renderResults(container);
-      return;
-    }
-
-    const idx = this._currentIndex;
-    const total = this._stats.total;
-    const progress = this.getProgressPercent();
-    const artClass = ['der', 'die', 'das'].includes(card.article) ? card.article : 'none';
-    const artLabel = card.article && card.article !== 'none' ? card.article : '';
-    const hasExample = card.example && card.example.trim();
-
-    container.innerHTML =
-      '<div class="fc-container">' +
-        '<div class="fc-progress"><div class="fc-progress-fill" style="width:' + progress + '%"></div></div>' +
-        '<div class="fc-counter">' + (idx + 1) + ' / ' + total + '</div>' +
-        '<div class="fc-card" onclick="Flashcards._flip()">' +
-          '<div class="fc-card-inner">' +
-            '<div class="fc-front">' +
-              (artLabel ? '<span class="fc-article ' + artClass + '">' + artLabel + '</span>' : '') +
-              '<div class="fc-de">' + card.de + '</div>' +
-              '<div class="fc-ar">' + (card.ar || '') + '</div>' +
-            '</div>' +
-            '<div class="fc-back">' +
-              (artLabel ? '<span class="fc-article ' + artClass + '">' + artLabel + '</span>' : '') +
-              '<div class="fc-de">' + card.de + '</div>' +
-              (card.phonetic ? '<div class="fc-phonetic">/' + card.phonetic + '/</div>' : '') +
-              '<div class="fc-ar">' + (card.ar || '') + '</div>' +
-              (hasExample ?
-                '<div class="fc-example">' +
-                  '<div>' + card.example + '</div>' +
-                  (card.ex_ar ? '<div class="fc-ex-ar">' + card.ex_ar + '</div>' : '') +
-                '</div>' : '') +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="fc-actions">' +
-          '<button class="fc-btn know" onclick="event.stopPropagation();handleFlashcardAnswer(\'know\')">عارفها</button>' +
-          '<button class="fc-btn learning" onclick="event.stopPropagation();handleFlashcardAnswer(\'learning\')">بتعلمها</button>' +
-          '<button class="fc-btn dontknow" onclick="event.stopPropagation();handleFlashcardAnswer(\'dontknow\')">مش عارفها</button>' +
-        '</div>' +
-      '</div>';
-
-    this._answered = false;
-  },
-
-  _flip() {
-    var card = document.querySelector('.fc-card');
-    if (card) card.classList.toggle('flipped');
-  },
-
-  renderResults(container) {
-    var stats = this.getStats();
-    var xp = this.getXP();
-    var duration = Math.round((Date.now() - this._startTime) / 1000);
-    var mins = Math.floor(duration / 60);
-    var secs = duration % 60;
-    var accuracy = stats.total > 0 ? Math.round((stats.known / stats.total) * 100) : 0;
-
-    var msg;
-    if (accuracy >= 80) msg = 'ممتاز! أداء رائع في المراجعة!';
-    else if (accuracy >= 60) msg = 'جيد جداً! واصل المراجعة!';
-    else if (accuracy >= 40) msg = 'محتاج مراجعة تانية عشان تتقنها.';
-    else msg = 'محتاج تكرر المراجعة. لا تستسلم!';
-
-    container.innerHTML =
-      '<div class="fc-results">' +
-        '<div class="fc-results-score">' + accuracy + '%</div>' +
-        '<div class="fc-results-msg">' + msg + '</div>' +
-        '<div class="fc-results-stats">' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">' + stats.total + '</span>' +
-            '<span class="fc-stat-label">إجمالي</span>' +
-          '</div>' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">' + stats.known + '</span>' +
-            '<span class="fc-stat-label">عارفها</span>' +
-          '</div>' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">' + stats.learning + '</span>' +
-            '<span class="fc-stat-label">بتعلمها</span>' +
-          '</div>' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">' + stats.dontknow + '</span>' +
-            '<span class="fc-stat-label">مش عارفها</span>' +
-          '</div>' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">' + mins + ':' + (secs < 10 ? '0' : '') + secs + '</span>' +
-            '<span class="fc-stat-label">المدة</span>' +
-          '</div>' +
-          '<div class="fc-stat-item">' +
-            '<span class="fc-stat-value">+' + xp + '</span>' +
-            '<span class="fc-stat-label">XP</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="fc-results-btn">' +
-          '<button class="fc-btn know" onclick="handleFlashcardRetry()">إعادة المراجعة</button>' +
-          '<button class="fc-btn dontknow" onclick="handleFlashcardBack()">العودة</button>' +
-        '</div>' +
-      '</div>';
-
-    var data = Progress.load();
-    Progress.addXP(data, xp);
-    Progress.markStudied(data);
-    Progress.ensureToday(data);
-    Progress.save(data);
-  },
-
-  startMode(containerId) {
-    var container = document.getElementById(containerId);
-    if (!container) return;
-
-    container.style.display = 'block';
-    container.scrollIntoView({ behavior: 'smooth' });
-
-    var data = Progress.load();
-    var wordsForReview = Progress.getWordsForReview(data);
-    var words = [];
-
-    if (wordsForReview.length >= 5) {
-      words = wordsForReview;
-    } else {
-      var level = data.level || 'A1';
-      var allWords = [];
-      var categories = DATA[level] && DATA[level].categories;
-      if (categories) {
-        for (var cat in categories) {
-          categories[cat].forEach(function(w) { allWords.push(w); });
+    if (startBtn) startBtn.addEventListener('click', startSession);
+    if (restartBtn) restartBtn.addEventListener('click', restartSession);
+    if (hardBtn) hardBtn.addEventListener('click', function() { answer('hard'); });
+    if (okBtn) okBtn.addEventListener('click', function() { answer('ok'); });
+    if (easyBtn) easyBtn.addEventListener('click', function() { answer('easy'); });
+    if (container) {
+      container.addEventListener('click', flipCard);
+      container.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          flipCard();
         }
-      }
-      var shuffled = this.shuffle(allWords);
-      words = shuffled.slice(0, Math.min(10, shuffled.length));
+      });
+    }
+  }
+
+  function startSession() {
+    var levelEl = document.getElementById('fc-level');
+    var catEl = document.getElementById('fc-category');
+    var countEl = document.getElementById('fc-count');
+
+    var level = levelEl ? levelEl.value : 'A1';
+    var category = catEl ? catEl.value : 'all';
+    var count = countEl ? parseInt(countEl.value) : 10;
+
+    // Get words
+    var allWords = [];
+    if (typeof VocabularyData !== 'undefined') {
+      allWords = VocabularyData.getWords(level, category);
     }
 
-    if (!words.length) {
-      container.innerHTML =
-        '<div class="fc-container">' +
-          '<div class="fc-results-msg" style="padding:40px 20px">مفيش كلمات للمراجعة حالياً. اتعلم كلمات جديدة الأول!</div>' +
-          '<div class="fc-results-btn">' +
-            '<button class="fc-btn dontknow" onclick="handleFlashcardBack()">العودة</button>' +
-          '</div>' +
-        '</div>';
+    // Prioritize learning words, then new words
+    var learningWords = [];
+    if (typeof Progress !== 'undefined') {
+      var myLearning = Progress.getMyWords('learning');
+      var myKnown = Progress.getMyWords('known');
+      var knownDe = myKnown.map(function(w) { return w.de; });
+
+      allWords.forEach(function(w) {
+        if (knownDe.indexOf(w.de) >= 0) return;
+        if (myLearning.some(function(l) { return l.de === w.de; })) {
+          learningWords.push(w);
+        }
+      });
+    }
+
+    // Shuffle and select
+    var selected = shuffle(learningWords.length > 0 ? learningWords : allWords).slice(0, count);
+
+    if (selected.length === 0) {
+      showToast('لا توجد كلمات لهذا المستوى. ابدأ بتعلم المفردات أولاً.', 'info');
       return;
     }
 
-    this.startSession(words, containerId);
-    this.renderCard(container);
-  },
+    cards = selected;
+    currentIndex = 0;
+    stats = { total: cards.length, easy: 0, ok: 0, hard: 0 };
+    startTime = Date.now();
+    answered = false;
 
-  shuffle(arr) {
+    // Hide settings, show cards
+    var settings = document.getElementById('flashcard-settings');
+    var area = document.getElementById('flashcard-area');
+    var complete = document.getElementById('flashcard-complete');
+    if (settings) settings.style.display = 'none';
+    if (complete) complete.style.display = 'none';
+    if (area) area.style.display = 'block';
+
+    updateCounters();
+    showCard();
+  }
+
+  function showCard() {
+    if (currentIndex >= cards.length) {
+      showComplete();
+      return;
+    }
+
+    var card = cards[currentIndex];
+    var frontArticle = document.getElementById('fc-front-article');
+    var frontWord = document.getElementById('fc-front-word');
+    var backTranslation = document.getElementById('fc-back-translation');
+    var backExample = document.getElementById('fc-back-example');
+    var currentEl = document.getElementById('fc-current');
+    var totalEl = document.getElementById('fc-total');
+
+    // Set content
+    if (frontArticle) {
+      if (card.article && card.article !== 'none') {
+        frontArticle.textContent = card.article;
+        frontArticle.className = 'flashcard-article article-' + card.article;
+      } else {
+        frontArticle.textContent = '';
+        frontArticle.className = 'flashcard-article';
+      }
+    }
+    if (frontWord) frontWord.textContent = card.de;
+    if (backTranslation) backTranslation.textContent = card.ar;
+    if (backExample) {
+      if (card.example) {
+        backExample.textContent = card.example;
+      } else {
+        backExample.textContent = '';
+      }
+    }
+    if (currentEl) currentEl.textContent = currentIndex + 1;
+    if (totalEl) totalEl.textContent = cards.length;
+
+    // Reset flip state
+    var flashcard = document.getElementById('flashcard');
+    if (flashcard) flashcard.classList.remove('flipped');
+
+    // Reset button states
+    answered = false;
+    enableControls(true);
+
+    updateProgress();
+  }
+
+  function flipCard() {
+    var flashcard = document.getElementById('flashcard');
+    if (flashcard) flashcard.classList.toggle('flipped');
+  }
+
+  function answer(type) {
+    if (answered) return;
+    answered = true;
+
+    var card = cards[currentIndex];
+
+    if (type === 'easy') {
+      stats.easy++;
+      if (typeof Progress !== 'undefined') Progress.markWord(card.de, 'known');
+      addXP(3);
+    } else if (type === 'ok') {
+      stats.ok++;
+      if (typeof Progress !== 'undefined') Progress.markWord(card.de, 'learning');
+      addXP(1);
+    } else if (type === 'hard') {
+      stats.hard++;
+      if (typeof Progress !== 'undefined') Progress.markWord(card.de, 'learning');
+      addXP(1);
+    }
+
+    updateCounters();
+    enableControls(false);
+
+    // Auto-advance after a short delay
+    setTimeout(function() {
+      currentIndex++;
+      showCard();
+    }, 500);
+  }
+
+  function showComplete() {
+    var area = document.getElementById('flashcard-area');
+    var complete = document.getElementById('flashcard-complete');
+    var finalEasy = document.getElementById('fc-final-easy');
+    var finalOk = document.getElementById('fc-final-ok');
+    var finalHard = document.getElementById('fc-final-hard');
+
+    if (area) area.style.display = 'none';
+    if (complete) complete.style.display = 'block';
+    if (finalEasy) finalEasy.textContent = stats.easy;
+    if (finalOk) finalOk.textContent = stats.ok;
+    if (finalHard) finalHard.textContent = stats.hard;
+
+    // Record session
+    if (typeof Progress !== 'undefined') {
+      var data = Progress.load();
+      Progress.markStudied(data);
+      Progress.save(data);
+      Progress.checkAchievements();
+    }
+  }
+
+  function restartSession() {
+    var settings = document.getElementById('flashcard-settings');
+    var area = document.getElementById('flashcard-area');
+    var complete = document.getElementById('flashcard-complete');
+
+    if (complete) complete.style.display = 'none';
+    if (area) area.style.display = 'none';
+    if (settings) settings.style.display = 'block';
+  }
+
+  function updateCounters() {
+    var hardCount = document.getElementById('fc-hard-count');
+    var okCount = document.getElementById('fc-ok-count');
+    var easyCount = document.getElementById('fc-easy-count');
+
+    if (hardCount) hardCount.textContent = stats.hard;
+    if (okCount) okCount.textContent = stats.ok;
+    if (easyCount) easyCount.textContent = stats.easy;
+  }
+
+  function updateProgress() {
+    var answered = stats.easy + stats.ok + stats.hard;
+    var pct = cards.length > 0 ? Math.round((answered / cards.length) * 100) : 0;
+    // Could update a progress bar if one exists
+  }
+
+  function enableControls(enabled) {
+    var hardBtn = document.getElementById('fc-hard-btn');
+    var okBtn = document.getElementById('fc-ok-btn');
+    var easyBtn = document.getElementById('fc-easy-btn');
+    if (hardBtn) hardBtn.disabled = !enabled;
+    if (okBtn) okBtn.disabled = !enabled;
+    if (easyBtn) easyBtn.disabled = !enabled;
+  }
+
+  function addXP(amount) {
+    if (typeof Progress !== 'undefined') {
+      var data = Progress.load();
+      Progress.addXP(data, amount);
+      Progress.save(data);
+    }
+  }
+
+  function shuffle(arr) {
     var a = arr.slice();
     for (var i = a.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -236,51 +249,20 @@ const Flashcards = {
     }
     return a;
   }
-};
 
-window.flashcardState = {
-  containerId: 'flashcard-area'
-};
-
-function handleFlashcardAnswer(type) {
-  Flashcards.answer(type);
-  if (Flashcards.isFinished()) {
-    var container = document.getElementById(window.flashcardState.containerId);
-    if (container) Flashcards.renderResults(container);
-  } else {
-    Flashcards.nextCard();
-    var container = document.getElementById(window.flashcardState.containerId);
-    if (container) Flashcards.renderCard(container);
-  }
-}
-
-function handleFlashcardNext() {
-  Flashcards.nextCard();
-  var container = document.getElementById(window.flashcardState.containerId);
-  if (container) {
-    if (Flashcards.isFinished()) {
-      Flashcards.renderResults(container);
-    } else {
-      Flashcards.renderCard(container);
+  function showToast(msg, type) {
+    if (typeof App !== 'undefined' && App.showToast) {
+      App.showToast(msg, type);
     }
   }
-}
 
-function handleFlashcardRetry() {
-  var cid = window.flashcardState.containerId;
-  Flashcards.startMode(cid);
-}
+  return {
+    init: init,
+    startSession: startSession,
+    restartSession: restartSession
+  };
+})();
 
-function handleFlashcardBack() {
-  var container = document.getElementById(window.flashcardState.containerId);
-  if (container) container.style.display = 'none';
-  if (typeof showLevelSelect === 'function') {
-    showLevelSelect();
-  }
-}
-
-function startFlashcards(containerId) {
-  containerId = containerId || 'flashcard-area';
-  window.flashcardState.containerId = containerId;
-  Flashcards.startMode(containerId);
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', Flashcards.init);
 }

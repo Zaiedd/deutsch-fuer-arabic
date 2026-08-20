@@ -1,290 +1,1144 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>تعلم الألمانية بالعربية | Deutsch für Araber</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=UnifrakturMaguntia&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="منصة تعلم اللغة الألمانية للمتحدثين بالعربية - تعلم مجاني بالكامل">
+  <title>Deutsch fuer Araber - تعلم الألمانية</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<nav>
-  <button class="nav-logo" onclick="switchPage('vocab')">
-    <img src="assets/logo.png" alt="شعار Deutsch für Araber" class="nav-logo-img">
-    <span class="nav-logo-text">Deutsch <em>للعرب</em></span>
-  </button>
-  <div class="nav-links" id="navLinks">
-    <button id="navBtn-vocab" class="active" onclick="switchPage('vocab')">المفردات</button>
-    <button id="navBtn-grammar" onclick="switchPage('grammar')">القواعد</button>
-    <button id="navBtn-listening" onclick="switchPage('listening')">الاستماع</button>
-    <button id="navBtn-reading" onclick="switchPage('reading')">القراءة</button>
-    <button id="navBtn-blog" onclick="switchPage('blog')">المدونة</button>
-    <button id="navBtn-quiz" onclick="switchPage('quiz')">الكويزات</button>
-    <button id="navBtn-flashcards" onclick="switchPage('flashcards')">البطاقات</button>
-    <button id="navBtn-mywords" onclick="switchPage('mywords')">كلماتي</button>
-    <button id="navBtn-dashboard" onclick="switchPage('dashboard')">لوحة التقدم</button>
-    <button id="navBtn-path" onclick="switchPage('path')">مسار التعلم</button>
-  </div>
-  <button class="nav-burger" id="navBurger" onclick="toggleMobileMenu()" aria-label="فتح القائمة">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="nav-overlay" id="navOverlay"></div>
-
-<div class="page active" id="page-vocab">
-<section class="hero">
-  <div class="hero-de">Deutsch lernen</div>
-  <div class="hero-ar">تعلّم الألمانية بطريقة احترافية</div>
-  <div class="hero-stats">
-    <div class="hero-stat"><strong>261</strong><span>كلمة</span></div>
-    <div class="hero-stat"><strong>6</strong><span>مستويات</span></div>
-    <div class="hero-stat"><strong>23</strong><span>تصنيف</span></div>
-  </div>
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="document.querySelector('#page-vocab .levels-section').scrollIntoView({behavior:'smooth'})">ابدأ التعلم الآن</button>
-    <button class="btn-secondary" onclick="switchPage('listening')">دروس الاستماع</button>
-  </div>
-</section>
-
-<div class="features">
-  <div class="features-grid">
-    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div><div class="feature-text"><h4>مرتبة بالمستوى</h4><p>من مبتدئ A1 حتى إتقان C2 حسب الإطار الأوروبي</p></div></div>
-    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 3.5h5.9a2 2 0 0 1 2 2v5.9a2 2 0 0 1-.59 1.41l-8 8a2 2 0 0 1-2.82 0l-5.9-5.9a2 2 0 0 1 0-2.82l8-8a2 2 0 0 1 1.41-.59z"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="feature-text"><h4>المادة (der/die/das)</h4><p>لون مختلف لكل مادة عشان تحفظها بسهولة</p></div></div>
-    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10.5H9l-4 3.5v-3.5H4z"/></svg></div><div class="feature-text"><h4>أمثلة في الجمل</h4><p>كل كلمة مع مثال عملي يوضح استخدامها</p></div></div>
-    <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.2 12.3l2.6 2.6 5-5.4"/></svg></div><div class="feature-text"><h4>تتبع التقدم</h4><p>علّم الكلمات اللي حفظتها وتابع تقدمك</p></div></div>
-  </div>
-</div>
-
-<section class="levels-section">
-  <h2 class="section-title">اختر مستواك</h2>
-  <p class="section-sub">الإطار الأوروبي المرجعي العام للغات (CEFR)</p>
-  <div class="level-tabs" id="vocabLevelTabs">
-    <button class="level-tab active" onclick="setVocabLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
-    <button class="level-tab" onclick="setVocabLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
-    <button class="level-tab" onclick="setVocabLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
-    <button class="level-tab" onclick="setVocabLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
-    <button class="level-tab" onclick="setVocabLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
-    <button class="level-tab" onclick="setVocabLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
-  </div>
-</section>
-
-<div class="progress-label" id="progressLabel"></div>
-<div class="progress-bar" style="margin:0 auto 0;max-width:1100px;padding:0 32px"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-
-<div class="categories"><div class="cat-grid" id="catGrid"></div></div>
-
-<section class="words-section">
-  <div class="words-header">
-    <span class="words-count" id="wordsCount"></span>
-    <div class="search-box">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#9E9D97" stroke-width="1.5"/><path d="M11 11l3 3" stroke="#9E9D97" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input type="text" id="searchInput" placeholder="ابحث عن كلمة..." oninput="renderWords()">
-    </div>
-  </div>
-  <div class="words-grid" id="wordsGrid"></div>
-</section>
-</div>
-
-<div class="page" id="page-grammar">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.2c2.3-.8 5-.6 8.5 1.3 3.5-1.9 6.2-2.1 8.5-1.3v13.2c-2.3-.8-5-.6-8.5 1.3-3.5-1.9-6.2-2.1-8.5-1.3z"/><path d="M12 6.5v13.2"/></svg></div>
-    <h1>قواعد اللغة الألمانية</h1>
-    <p>شرح مبسّط بالعربي مع جداول وأمثلة عملية</p>
-  </div>
-  <div class="levels-section" style="padding-top:32px">
-    <div class="level-tabs" id="gramLevelTabs">
-      <button class="level-tab active" onclick="setGramLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
-      <button class="level-tab" onclick="setGramLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
-      <button class="level-tab" onclick="setGramLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
-      <button class="level-tab" onclick="setGramLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
-      <button class="level-tab" onclick="setGramLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
-      <button class="level-tab" onclick="setGramLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
-    </div>
-  </div>
-  <div class="content-wrap" id="gramContent" style="padding-top:0"></div>
-</div>
-
-<div class="page" id="page-listening">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4.5" height="6" rx="1.5"/><rect x="16.5" y="14" width="4.5" height="6" rx="1.5"/></svg></div>
-    <h1>دروس الاستماع</h1>
-    <p>استمع للنطق الصحيح مباشرة من متصفحك</p>
-  </div>
-  <div class="levels-section" style="padding-top:32px">
-    <div class="level-tabs" id="listenLevelTabs">
-      <button class="level-tab active" onclick="setListenLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
-      <button class="level-tab" onclick="setListenLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
-      <button class="level-tab" onclick="setListenLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
-      <button class="level-tab" onclick="setListenLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
-      <button class="level-tab" onclick="setListenLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
-      <button class="level-tab" onclick="setListenLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
-    </div>
-  </div>
-  <div class="content-wrap" id="listenContent" style="padding-top:0">
-    <div class="listen-notice">
-      <span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z"/><path d="M16 9.2a4 4 0 0 1 0 5.6M18.8 6.8a8 8 0 0 1 0 10.4"/></svg></span>
-      <span>الاستماع بيشتغل بصوت الكمبيوتر (Web Speech API) لنطق ألماني حقيقي. لو الصوت مش شغال، جرّب متصفح Chrome أو تأكد إن صوت الجهاز مش مكتوم.</span>
-    </div>
-    <div id="listenList"></div>
-  </div>
-</div>
-
-<div class="page" id="page-reading">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="5" height="16" rx="1"/><rect x="10" y="6.5" width="5" height="13.5" rx="1"/><path d="M16.5 6.7l3.6 1-3 12.6-3.6-1z"/></svg></div>
-    <h1>نصوص للقراءة</h1>
-    <p>قصص قصيرة بالألماني مع الترجمة العربية جنب كل جملة</p>
-  </div>
-  <div class="levels-section" style="padding-top:32px">
-    <div class="level-tabs" id="readLevelTabs">
-      <button class="level-tab active" onclick="setReadLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
-      <button class="level-tab" onclick="setReadLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
-      <button class="level-tab" onclick="setReadLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
-      <button class="level-tab" onclick="setReadLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
-      <button class="level-tab" onclick="setReadLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
-      <button class="level-tab" onclick="setReadLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
-    </div>
-  </div>
-  <div class="content-wrap" id="readContent" style="padding-top:0"></div>
-</div>
-
-<div class="page" id="page-blog">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l.9-4.2L16 4.7a1.8 1.8 0 0 1 2.6 0l.7.7a1.8 1.8 0 0 1 0 2.6L8.2 19.1z"/><path d="M14 6.8l3.2 3.2"/></svg></div>
-    <h1>المدونة</h1>
-    <p>مقالات ونصايح عملية لتعلم الألمانية</p>
-  </div>
-  <div class="content-wrap" id="blogContent"></div>
-</div>
-
-<div class="page" id="page-quiz">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-    <h1>كويزات تفاعلية</h1>
-    <p>اختبر معلوماتك في المفردات والقواعد والترجمة</p>
-  </div>
-  <div class="quiz-setup" id="quizSetup">
-    <div class="levels-section" style="padding-top:32px">
-      <div class="level-tabs" id="quizLevelTabs">
-        <button class="level-tab active" onclick="setQuizLevel('A1',this)"><span class="level-badge">A1</span>مبتدئ</button>
-        <button class="level-tab" onclick="setQuizLevel('A2',this)"><span class="level-badge">A2</span>أساسي</button>
-        <button class="level-tab" onclick="setQuizLevel('B1',this)"><span class="level-badge">B1</span>متوسط</button>
-        <button class="level-tab" onclick="setQuizLevel('B2',this)"><span class="level-badge">B2</span>متوسط متقدم</button>
-        <button class="level-tab" onclick="setQuizLevel('C1',this)"><span class="level-badge">C1</span>متقدم</button>
-        <button class="level-tab" onclick="setQuizLevel('C2',this)"><span class="level-badge">C2</span>إتقان</button>
+  <!-- ===== DESKTOP TOP NAVIGATION ===== -->
+  <nav id="top-nav" aria-label="التنقل الرئيسي">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="brand-icon">DE</span>
+        <span class="brand-text">Deutsch fuer Araber</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="#page-home" class="nav-link active" data-page="page-home" aria-current="page">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">الرئيسية</span>
+          </a>
+        </li>
+        <li>
+          <a href="#page-learn" class="nav-link" data-page="page-learn">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">تعلم</span>
+          </a>
+        </li>
+        <li>
+          <a href="#page-practice" class="nav-link" data-page="page-practice">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-label">تدريب</span>
+          </a>
+        </li>
+        <li>
+          <a href="#page-ai" class="nav-link" data-page="page-ai">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Bat</span>
+          </a>
+        </li>
+        <li>
+          <a href="#page-progress" class="nav-link" data-page="page-progress">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">تقدمي</span>
+          </a>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#page-settings" class="nav-action-btn" data-page="page-settings" title="الإعدادات" aria-label="الإعدادات">⚙️</a>
       </div>
     </div>
-    <div class="quiz-type-grid" id="quizTypeGrid">
-      <button class="quiz-type-card" onclick="startQuizFromSetup('mixed')">
-        <div class="quiz-type-icon">🎯</div>
-        <div class="quiz-type-name">كويز مختلط</div>
-        <div class="quiz-type-desc">أسئلة من كل الأنواع</div>
-      </button>
-      <button class="quiz-type-card" onclick="startQuizFromSetup('vocabulary')">
-        <div class="quiz-type-icon">📝</div>
-        <div class="quiz-type-name">مفردات</div>
-        <div class="quiz-type-desc">اسأل عن معاني الكلمات</div>
-      </button>
-      <button class="quiz-type-card" onclick="startQuizFromSetup('articles')">
-        <div class="quiz-type-icon">🏷️</div>
-        <div class="quiz-type-name">الأدوات</div>
-        <div class="quiz-type-desc">der, die, das</div>
-      </button>
-      <button class="quiz-type-card" onclick="startQuizFromSetup('translation')">
-        <div class="quiz-type-icon">🔄</div>
-        <div class="quiz-type-name">ترجمة</div>
-        <div class="quiz-type-desc">عربي ↔ ألماني</div>
-      </button>
-      <button class="quiz-type-card" onclick="startQuizFromSetup('sentence')">
-        <div class="quiz-type-icon">💬</div>
-        <div class="quiz-type-name">إكمال جمل</div>
-        <div class="quiz-type-desc">املأ الفراغ بالكلمة الصحيحة</div>
-      </button>
+  </nav>
+
+  <!-- ===== MOBILE BOTTOM NAVIGATION ===== -->
+  <nav id="bottom-nav" aria-label="تنقل الهاتف">
+    <ul class="bottom-nav-links">
+      <li>
+        <a href="#page-home" class="bottom-nav-link active" data-page="page-home" aria-current="page">
+          <span class="bottom-nav-icon">🏠</span>
+          <span class="bottom-nav-label">الرئيسية</span>
+          <span class="bottom-nav-dot" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#page-learn" class="bottom-nav-link" data-page="page-learn">
+          <span class="bottom-nav-icon">📖</span>
+          <span class="bottom-nav-label">تعلم</span>
+          <span class="bottom-nav-dot" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#page-practice" class="bottom-nav-link" data-page="page-practice">
+          <span class="bottom-nav-icon">🎯</span>
+          <span class="bottom-nav-label">تدريب</span>
+          <span class="bottom-nav-dot" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#page-ai" class="bottom-nav-link" data-page="page-ai">
+          <span class="bottom-nav-icon">🤖</span>
+          <span class="bottom-nav-label">Bat</span>
+          <span class="bottom-nav-dot" aria-hidden="true"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#page-progress" class="bottom-nav-link" data-page="page-progress">
+          <span class="bottom-nav-icon">📊</span>
+          <span class="bottom-nav-label">تقدمي</span>
+          <span class="bottom-nav-dot" aria-hidden="true"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ===== MAIN CONTENT AREA ===== -->
+  <main id="main-content">
+
+    <!-- ============================= -->
+    <!-- PAGE: HOME                    -->
+    <!-- ============================= -->
+    <section id="page-home" class="page" aria-label="الرئيسية">
+
+      <!-- Hero Section -->
+      <div class="hero-banner" role="banner">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">ابدأ رحلتك في تعلم الألمانية</h1>
+          <p class="hero-subtitle">منصة مجانية بالكامل للمتحدثين بالعربية — تعلم بالسرعة التي تناسبك</p>
+          <div class="hero-actions">
+            <button class="btn btn-gold hero-cta" data-page="page-learn">ابدأ التعلم الآن</button>
+            <button class="btn btn-outline hero-secondary" data-page="page-placement">اختبر مستواك</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Start Cards -->
+      <div class="section-container">
+        <h2 class="section-title">ابدأ بسرعة</h2>
+        <div class="quick-start-grid" role="list">
+          <div class="quick-start-card" role="listitem" data-page="page-learn" tabindex="0" aria-label="ابدأ من الصفر">
+            <div class="qsc-icon">🌱</div>
+            <h3 class="qsc-title">ابدأ من الصفر</h3>
+            <p class="qsc-desc">تعلم الحروف والأرقام والتحيات الأساسية</p>
+            <span class="qsc-arrow" aria-hidden="true">&larr;</span>
+          </div>
+          <div class="quick-start-card" role="listitem" data-page="page-placement" tabindex="0" aria-label="اختبر مستواك">
+            <div class="qsc-icon">📋</div>
+            <h3 class="qsc-title">اختبر مستواك</h3>
+            <p class="qsc-desc">تحديد مستواك بدقة من A1 إلى C2</p>
+            <span class="qsc-arrow" aria-hidden="true">&larr;</span>
+          </div>
+          <div class="quick-start-card" role="listitem" data-page="page-progress" tabindex="0" aria-label="تابع تعلمك">
+            <div class="qsc-icon">📈</div>
+            <h3 class="qsc-title">تابع تعلمك</h3>
+            <p class="qsc-desc">راقب تقدمك وإنجازاتك اليومية</p>
+            <span class="qsc-arrow" aria-hidden="true">&larr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level Selector Grid -->
+      <div class="section-container">
+        <h2 class="section-title">اختر مستواك</h2>
+        <div class="level-grid" role="list" aria-label="مستويات التعلم">
+          <div class="level-card" role="listitem" data-level="A1" tabindex="0">
+            <div class="level-badge level-a1">A1</div>
+            <div class="level-name">المبتدئ</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى A1"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+          <div class="level-card" role="listitem" data-level="A2" tabindex="0">
+            <div class="level-badge level-a2">A2</div>
+            <div class="level-name">ما قبل المتوسط</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى A2"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+          <div class="level-card" role="listitem" data-level="B1" tabindex="0">
+            <div class="level-badge level-b1">B1</div>
+            <div class="level-name">المتوسط</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى B1"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+          <div class="level-card" role="listitem" data-level="B2" tabindex="0">
+            <div class="level-badge level-b2">B2</div>
+            <div class="level-name">فوق المتوسط</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى B2"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+          <div class="level-card" role="listitem" data-level="C1" tabindex="0">
+            <div class="level-badge level-c1">C1</div>
+            <div class="level-name">المتقدم</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى C1"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+          <div class="level-card" role="listitem" data-level="C2" tabindex="0">
+            <div class="level-badge level-c2">C2</div>
+            <div class="level-name">الإتقان</div>
+            <div class="level-progress-bar">
+              <div class="level-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="تقدم المستوى C2"></div>
+            </div>
+            <div class="level-progress-text">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Topics -->
+      <div class="section-container">
+        <h2 class="section-title">مواضيع اليوم</h2>
+        <div class="topics-grid" role="list" aria-label="مواضيع اليوم">
+          <div class="topic-card" role="listitem" tabindex="0" data-page="page-learn" data-tab="learn-vocab">
+            <div class="topic-icon">🗣️</div>
+            <h3 class="topic-title">تحيات يومية</h3>
+            <span class="topic-tag tag-a1">A1</span>
+          </div>
+          <div class="topic-card" role="listitem" tabindex="0" data-page="page-learn" data-tab="learn-grammar">
+            <div class="topic-icon">📝</div>
+            <h3 class="topic-title">تصريف الأفعال</h3>
+            <span class="topic-tag tag-a1">A1</span>
+          </div>
+          <div class="topic-card" role="listitem" tabindex="0" data-page="page-learn" data-tab="learn-listening">
+            <div class="topic-icon">🎧</div>
+            <h3 class="topic-title">الاستماع: في المقهى</h3>
+            <span class="topic-tag tag-a2">A2</span>
+          </div>
+          <div class="topic-card" role="listitem" tabindex="0" data-page="page-learn" data-tab="learn-reading">
+            <div class="topic-icon">📚</div>
+            <h3 class="topic-title">قراءة: رسالة بريد</h3>
+            <span class="topic-tag tag-b1">B1</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips Section -->
+      <div class="section-container">
+        <h2 class="section-title">نصائح للتعلم</h2>
+        <div class="tips-carousel" role="region" aria-label="نصائح التعلم">
+          <div class="tip-card active" role="group" aria-roledescription="شريحة" aria-label="نصيحة 1 من 3">
+            <div class="tip-quote-icon" aria-hidden="true">💡</div>
+            <p class="tip-text">تعمّد الكلمة الجديدة 5 مرات على الأقل في جمل مختلفة لضمان حفظها.</p>
+            <span class="tip-source">— نصيحة يومية</span>
+          </div>
+          <div class="tip-card" role="group" aria-roledescription="شريحة" aria-label="نصيحة 2 من 3">
+            <div class="tip-quote-icon" aria-hidden="true">🎯</div>
+            <p class="tip-text">استخدم البطاقات التعليمية يومياً لمدة 10 دقائق فقط.</p>
+            <span class="tip-source">— نصيحة يومية</span>
+          </div>
+          <div class="tip-card" role="group" aria-roledescription="شريحة" aria-label="نصيحة 3 من 3">
+            <div class="tip-quote-icon" aria-hidden="true">🗣️</div>
+            <p class="tip-text">تحدّث مع مساعد Bat بالألمانية حتى لو أخطأت — الممارسة تصنع الإتقان.</p>
+            <span class="tip-source">— نصيحة يومية</span>
+          </div>
+        </div>
+        <div class="tips-dots" role="tablist" aria-label="التنقل بين النصائح">
+          <button class="tip-dot active" role="tab" aria-selected="true" aria-label="نصيحة 1" data-index="0"></button>
+          <button class="tip-dot" role="tab" aria-selected="false" aria-label="نصيحة 2" data-index="1"></button>
+          <button class="tip-dot" role="tab" aria-selected="false" aria-label="نصيحة 3" data-index="2"></button>
+        </div>
+      </div>
+
+    </section>    <!-- ============================= -->
+    <!-- PAGE: LEARN                   -->
+    <!-- ============================= -->
+    <section id="page-learn" class="page" style="display:none" aria-label="تعلم">
+
+      <!-- Learn Tab Navigation -->
+      <div class="tabs-header" role="tablist" aria-label="أقسام التعلم">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="learn-vocab" id="tab-learn-vocab" data-tab="learn-vocab">المفردات</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="learn-grammar" id="tab-learn-grammar" data-tab="learn-grammar">القواعد</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="learn-listening" id="tab-learn-listening" data-tab="learn-listening">الاستماع</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="learn-reading" id="tab-learn-reading" data-tab="learn-reading">القراءة</button>
+      </div>
+
+      <!-- Sub-page: Vocabulary -->
+      <div class="tab-page active" id="learn-vocab" role="tabpanel" aria-labelledby="tab-learn-vocab">
+        <div class="section-container">
+          <h2 class="section-title">المفردات</h2>
+          <div class="filter-bar">
+            <div class="filter-group" role="radiogroup" aria-label="اختر المستوى">
+              <button class="filter-chip active" role="radio" aria-checked="true" data-level="A1">A1</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-level="A2">A2</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-level="B1">B1</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-level="B2">B2</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-level="C1">C1</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-level="C2">C2</button>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <div class="filter-group" role="radiogroup" aria-label="اختر التصنيف">
+              <button class="filter-chip active" role="radio" aria-checked="true" data-category="all">الكل</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="greetings">تحيات</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="numbers">أرقام</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="food">طعام</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="family">عائلة</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="travel">سفر</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="work">عمل</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="weather">طقس</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-category="shopping">تسوق</button>
+            </div>
+          </div>
+          <div class="vocab-grid" id="vocab-grid" role="list" aria-label="قائمة المفردات">
+            <div class="vocab-empty-state">
+              <span class="vocab-empty-icon" aria-hidden="true">📖</span>
+              <p>اختر المستوى والتصنيف لعرض المفردات</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Grammar -->
+      <div class="tab-page" id="learn-grammar" role="tabpanel" aria-labelledby="tab-learn-grammar" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">قواعد اللغة الألمانية</h2>
+          <div class="filter-bar">
+            <div class="filter-group" role="radiogroup" aria-label="تصنيف القواعد">
+              <button class="filter-chip active" role="radio" aria-checked="true" data-grammar-cat="all">الكل</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="nouns">الاسماء</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="articles">الأحرف التعريف</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="verbs">الأفعال</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="adjectives">الصفات</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="prepositions">حروف الجر</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="sentence">تركيب الجمل</button>
+              <button class="filter-chip" role="radio" aria-checked="false" data-grammar-cat="cases">الحالات</button>
+            </div>
+          </div>
+          <div class="grammar-list" id="grammar-list" role="list" aria-label="قائمة القواعد">
+            <div class="grammar-empty-state">
+              <span class="grammar-empty-icon" aria-hidden="true">📝</span>
+              <p>اختر تصنيفاً لعرض القواعد</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Listening -->
+      <div class="tab-page" id="learn-listening" role="tabpanel" aria-labelledby="tab-learn-listening" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">تمارين الاستماع</h2>
+          <div class="listening-list" id="listening-list" role="list" aria-label="تمارين الاستماع">
+            <div class="listening-exercise" role="listitem">
+              <div class="listening-info">
+                <h3 class="listening-title">تحيات في الصباح</h3>
+                <span class="listening-level tag-a1">A1</span>
+                <span class="listening-duration">0:45</span>
+              </div>
+              <div class="listening-controls">
+                <div class="speed-selector" role="radiogroup" aria-label="سرعة التشغيل">
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="0.75">0.75x</button>
+                  <button class="speed-btn active" role="radio" aria-checked="true" data-speed="1">1x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.25">1.25x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.5">1.5x</button>
+                </div>
+                <button class="btn btn-sm btn-red listening-play-btn" aria-label="تشغيل التمرين">&#9654; تشغيل</button>
+              </div>
+            </div>
+            <div class="listening-exercise" role="listitem">
+              <div class="listening-info">
+                <h3 class="listening-title">في المقهى</h3>
+                <span class="listening-level tag-a2">A2</span>
+                <span class="listening-duration">1:20</span>
+              </div>
+              <div class="listening-controls">
+                <div class="speed-selector" role="radiogroup" aria-label="سرعة التشغيل">
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="0.75">0.75x</button>
+                  <button class="speed-btn active" role="radio" aria-checked="true" data-speed="1">1x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.25">1.25x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.5">1.5x</button>
+                </div>
+                <button class="btn btn-sm btn-red listening-play-btn" aria-label="تشغيل التمرين">&#9654; تشغيل</button>
+              </div>
+            </div>
+            <div class="listening-exercise" role="listitem">
+              <div class="listening-info">
+                <h3 class="listening-title">مكالمة هاتفية</h3>
+                <span class="listening-level tag-b1">B1</span>
+                <span class="listening-duration">2:10</span>
+              </div>
+              <div class="listening-controls">
+                <div class="speed-selector" role="radiogroup" aria-label="سرعة التشغيل">
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="0.75">0.75x</button>
+                  <button class="speed-btn active" role="radio" aria-checked="true" data-speed="1">1x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.25">1.25x</button>
+                  <button class="speed-btn" role="radio" aria-checked="false" data-speed="1.5">1.5x</button>
+                </div>
+                <button class="btn btn-sm btn-red listening-play-btn" aria-label="تشغيل التمرين">&#9654; تشغيل</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Reading -->
+      <div class="tab-page" id="learn-reading" role="tabpanel" aria-labelledby="tab-learn-reading" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">تمارين القراءة</h2>
+          <p class="section-subtitle">انقر على أي كلمة ألمانية لترجمتها فوراً</p>
+          <div class="reading-list" id="reading-list" role="list" aria-label="نصوص القراءة">
+            <article class="reading-passage" role="listitem">
+              <div class="reading-header">
+                <h3 class="reading-title" dir="ltr" lang="de">Mein erster Tag in Deutschland</h3>
+                <span class="reading-level tag-a1">A1</span>
+              </div>
+              <div class="reading-body">
+                <p class="reading-text" lang="de" dir="ltr" aria-label="نص بالألمانية">
+                  <span class="de-word" data-translation="مرحباً">Hallo</span>!
+                  <span class="de-word" data-translation="اسمي">Mein Name</span>
+                  <span class="de-word" data-translation="هو">ist</span>
+                  <span class="de-word" data-translation="محمد">Mohammed</span>.
+                  <span class="de-word" data-translation="أنا">Ich</span>
+                  <span class="de-word" data-translation="أأتي">komme</span>
+                  <span class="de-word" data-translation="من">aus</span>
+                  <span class="de-word" data-translation="مصر">Ägypten</span>.
+                  <span class="de-word" data-translation="أنا">Ich</span>
+                  <span class="de-word" data-translation="أتعلم">lerne</span>
+                  <span class="de-word" data-translation="الألمانية">Deutsch</span>.
+                  <span class="de-word" data-translation="اللغة الألمانية">Die deutsche Sprache</span>
+                  <span class="de-word" data-translation="جميلة">ist schön</span>
+                  <span class="de-word" data-translation="ومفيدة">und nützlich</span>.
+                </p>
+              </div>
+              <div class="reading-translation" id="reading-translation-1" aria-live="polite">
+                <span class="translation-placeholder">انقر على كلمة ألمانية لرؤية ترجمتها</span>
+              </div>
+            </article>
+            <article class="reading-passage" role="listitem">
+              <div class="reading-header">
+                <h3 class="reading-title" dir="ltr" lang="de">Einkaufen gehen</h3>
+                <span class="reading-level tag-a2">A2</span>
+              </div>
+              <div class="reading-body">
+                <p class="reading-text" lang="de" dir="ltr" aria-label="نص بالألمانية">
+                  <span class="de-word" data-translation="اليوم">Heute</span>
+                  <span class="de-word" data-translation="أريد">möchte</span>
+                  <span class="de-word" data-translation="أنا">ich</span>
+                  <span class="de-word" data-translation="التسوق">einkaufen</span>.
+                  <span class="de-word" data-translation="أحتاج">Ich brauche</span>
+                  <span class="de-word" data-translation="خبزاً">Brot</span>,
+                  <span class="de-word" data-translation="حليباً">Milch</span>
+                  <span class="de-word" data-translation="و">und</span>
+                  <span class="de-word" data-translation="فواكه">Obst</span>.
+                  <span class="de-word" data-translation="المتجر">Der Supermarkt</span>
+                  <span class="de-word" data-translation="قريب">ist nah</span>
+                  <span class="de-word" data-translation="من">an</span>
+                  <span class="de-word" data-translation="منزلي">meinem Haus</span>.
+                </p>
+              </div>
+              <div class="reading-translation" id="reading-translation-2" aria-live="polite">
+                <span class="translation-placeholder">انقر على كلمة ألمانية لرؤية ترجمتها</span>
+              </div>
+            </article>
+            <article class="reading-passage" role="listitem">
+              <div class="reading-header">
+                <h3 class="reading-title" dir="ltr" lang="de">Ein Brief an eine Freundin</h3>
+                <span class="reading-level tag-b1">B1</span>
+              </div>
+              <div class="reading-body">
+                <p class="reading-text" lang="de" dir="ltr" aria-label="نص بالألمانية">
+                  <span class="de-word" data-translation="عزيزي">Liebe</span>
+                  <span class="de-word" data-translation="سارة">Sarah</span>,
+                  <span class="de-word" data-translation="كيف">wie</span>
+                  <span class="de-word" data-translation="حالك">geht es dir</span>?
+                  <span class="de-word" data-translation="أنا">Ich</span>
+                  <span class="de-word" data-translation="أريد">möchte</span>
+                  <span class="de-word" data-translation="لك">dir</span>
+                  <span class="de-word" data-translation="أخبر">erzählen</span>:
+                  <span class="de-word" data-translation="لقد">Ich habe</span>
+                  <span class="de-word" data-translation="جديداً">einen neuen</span>
+                  <span class="de-word" data-translation="عملاً">Job</span>
+                  <span class="de-word" data-translation="وجدته">gefunden</span>!
+                  <span class="de-word" data-translation="أعمل">Ich arbeite</span>
+                  <span class="de-word" data-translation="في">bei</span>
+                  <span class="de-word" data-translation="شركة">einer Firma</span>
+                  <span class="de-word" data-translation="في">in</span>
+                  <span class="de-word" data-translation="برلين">Berlin</span>.
+                </p>
+              </div>
+              <div class="reading-translation" id="reading-translation-3" aria-live="polite">
+                <span class="translation-placeholder">انقر على كلمة ألمانية لرؤية ترجمتها</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- ============================= -->
+    <!-- PAGE: PRACTICE                -->
+    <!-- ============================= -->
+    <section id="page-practice" class="page" style="display:none" aria-label="تدريب">
+
+      <div class="tabs-header" role="tablist" aria-label="أقسام التدريب">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="practice-quiz" id="tab-practice-quiz" data-tab="practice-quiz">الاختبار</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="practice-flashcards" id="tab-practice-flashcards" data-tab="practice-flashcards">البطاقات</button>
+      </div>
+
+      <!-- Sub-page: Quiz -->
+      <div class="tab-page active" id="practice-quiz" role="tabpanel" aria-labelledby="tab-practice-quiz">
+        <div class="section-container">
+          <h2 class="section-title">اختبارات تدريبية</h2>
+          <div class="quiz-setup" id="quiz-setup">
+            <h3 class="quiz-setup-title">اختر نوع الاختبار</h3>
+            <div class="quiz-type-grid" role="radiogroup" aria-label="نوع الاختبار">
+              <button class="quiz-type-card active" role="radio" aria-checked="true" data-quiz-type="vocab">
+                <span class="quiz-type-icon">📝</span>
+                <span class="quiz-type-name">مفردات</span>
+              </button>
+              <button class="quiz-type-card" role="radio" aria-checked="false" data-quiz-type="grammar">
+                <span class="quiz-type-icon">📐</span>
+                <span class="quiz-type-name">قواعد</span>
+              </button>
+              <button class="quiz-type-card" role="radio" aria-checked="false" data-quiz-type="mixed">
+                <span class="quiz-type-icon">🔀</span>
+                <span class="quiz-type-name">مختلط</span>
+              </button>
+              <button class="quiz-type-card" role="radio" aria-checked="false" data-quiz-type="articles">
+                <span class="quiz-type-icon">🎨</span>
+                <span class="quiz-type-name">الأحرف</span>
+              </button>
+            </div>
+            <div class="quiz-level-select">
+              <label class="quiz-label" for="quiz-level">اختر المستوى:</label>
+              <select id="quiz-level" class="quiz-select" aria-label="مستوى الاختبار">
+                <option value="A1">A1 - مبتدئ</option>
+                <option value="A2">A2 - ما قبل المتوسط</option>
+                <option value="B1">B1 - متوسط</option>
+                <option value="B2">B2 - فوق المتوسط</option>
+                <option value="C1">C1 - متقدم</option>
+                <option value="C2">C2 - إتقان</option>
+              </select>
+            </div>
+            <button class="btn btn-gold btn-lg quiz-start-btn" id="quiz-start-btn" aria-label="ابدأ الاختبار">🎯 ابدأ الاختبار</button>
+          </div>
+
+          <div class="quiz-area" id="quiz-area" style="display:none" aria-live="polite">
+            <div class="quiz-progress-bar-container">
+              <div class="quiz-progress-bar" id="quiz-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="quiz-progress-fill"></div>
+              </div>
+              <span class="quiz-progress-text" id="quiz-progress-text">1 / 10</span>
+            </div>
+            <div class="quiz-question-card" id="quiz-question-card">
+              <p class="quiz-question-text" id="quiz-question-text"></p>
+              <div class="quiz-options" id="quiz-options" role="radiogroup" aria-label="خيارات الإجابة"></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn-red quiz-next-btn" id="quiz-next-btn" style="display:none" aria-label="السؤال التالي">السؤال التالي &larr;</button>
+            </div>
+            <div class="quiz-results" id="quiz-results" style="display:none">
+              <div class="quiz-results-card">
+                <div class="quiz-results-icon" aria-hidden="true">🎉</div>
+                <h3 class="quiz-results-title">أحسنت!</h3>
+                <div class="quiz-score" id="quiz-score" aria-label="نتيجة الاختبار"></div>
+                <p class="quiz-results-msg" id="quiz-results-msg"></p>
+                <div class="quiz-results-actions">
+                  <button class="btn btn-gold" id="quiz-retry-btn">أعد الاختبار</button>
+                  <button class="btn btn-outline" data-page="page-progress">عرض التقدم</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Flashcards -->
+      <div class="tab-page" id="practice-flashcards" role="tabpanel" aria-labelledby="tab-practice-flashcards" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">البطاقات التعليمية</h2>
+          <div class="flashcard-settings" id="flashcard-settings">
+            <div class="flashcard-setting">
+              <label class="setting-label" for="fc-level">المستوى:</label>
+              <select id="fc-level" class="quiz-select" aria-label="مستوى البطاقات">
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+                <option value="C2">C2</option>
+              </select>
+            </div>
+            <div class="flashcard-setting">
+              <label class="setting-label" for="fc-category">التصنيف:</label>
+              <select id="fc-category" class="quiz-select" aria-label="تصنيف البطاقات">
+                <option value="all">الكل</option>
+                <option value="greetings">تحيات</option>
+                <option value="numbers">أرقام</option>
+                <option value="food">طعام</option>
+                <option value="family">عائلة</option>
+                <option value="travel">سفر</option>
+                <option value="work">عمل</option>
+                <option value="weather">طقس</option>
+                <option value="shopping">تسوق</option>
+              </select>
+            </div>
+            <div class="flashcard-setting">
+              <label class="setting-label" for="fc-count">عدد البطاقات:</label>
+              <select id="fc-count" class="quiz-select" aria-label="عدد البطاقات">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+            <button class="btn btn-gold" id="fc-start-btn" aria-label="ابدأ البطاقات">ابدأ</button>
+          </div>
+
+          <div class="flashcard-area" id="flashcard-area" style="display:none">
+            <div class="flashcard-counter" id="flashcard-counter" aria-live="polite">
+              <span id="fc-current">1</span> / <span id="fc-total">10</span>
+            </div>
+            <div class="flashcard-container" id="flashcard-container" role="button" aria-label="اضغط لقلب البطاقة" tabindex="0">
+              <div class="flashcard" id="flashcard">
+                <div class="flashcard-front">
+                  <span class="flashcard-article" id="fc-front-article"></span>
+                  <span class="flashcard-word" id="fc-front-word" lang="de" dir="ltr"></span>
+                  <span class="flashcard-hint">اضغط للقلب</span>
+                </div>
+                <div class="flashcard-back">
+                  <span class="flashcard-translation" id="fc-back-translation"></span>
+                  <span class="flashcard-example" id="fc-back-example" lang="de" dir="ltr"></span>
+                </div>
+              </div>
+            </div>
+            <div class="flashcard-controls">
+              <button class="fc-control-btn fc-hard" id="fc-hard-btn" aria-label="صعب - أعد البطاقة لاحقاً">
+                <span class="fc-btn-icon">🔴</span>
+                <span class="fc-btn-label">صعب</span>
+              </button>
+              <button class="fc-control-btn fc-ok" id="fc-ok-btn" aria-label="مقبول">
+                <span class="fc-btn-icon">🟡</span>
+                <span class="fc-btn-label">مقبول</span>
+              </button>
+              <button class="fc-control-btn fc-easy" id="fc-easy-btn" aria-label="سهل - أعرفها">
+                <span class="fc-btn-icon">🟢</span>
+                <span class="fc-btn-label">سهل</span>
+              </button>
+            </div>
+            <div class="flashcard-progress" id="flashcard-progress">
+              <div class="fc-stat">
+                <span class="fc-stat-dot fc-dot-hard" aria-hidden="true"></span>
+                <span class="fc-stat-label">صعب: <span id="fc-hard-count">0</span></span>
+              </div>
+              <div class="fc-stat">
+                <span class="fc-stat-dot fc-dot-ok" aria-hidden="true"></span>
+                <span class="fc-stat-label">مقبول: <span id="fc-ok-count">0</span></span>
+              </div>
+              <div class="fc-stat">
+                <span class="fc-stat-dot fc-dot-easy" aria-hidden="true"></span>
+                <span class="fc-stat-label">سهل: <span id="fc-easy-count">0</span></span>
+              </div>
+            </div>
+            <div class="flashcard-complete" id="flashcard-complete" style="display:none" aria-live="polite">
+              <div class="flashcard-complete-card">
+                <div class="flashcard-complete-icon" aria-hidden="true">🏆</div>
+                <h3>أحسنت! أنهيت البطاقات</h3>
+                <p>سهل: <span id="fc-final-easy">0</span> | مقبول: <span id="fc-final-ok">0</span> | صعب: <span id="fc-final-hard">0</span></p>
+                <button class="btn btn-gold" id="fc-restart-btn">أعد البدء</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- ============================= -->
+    <!-- PAGE: AI (Bat)                -->
+    <!-- ============================= -->
+    <section id="page-ai" class="page" style="display:none" aria-label="مساعد Bat الذكي">
+      <div class="ai-container">
+        <div class="ai-header">
+          <div class="ai-avatar" aria-hidden="true">🤖</div>
+          <div class="ai-header-text">
+            <h2 class="ai-name">Bat</h2>
+            <p class="ai-status">مساعدك الذكي للغة الألمانية</p>
+          </div>
+        </div>
+
+        <div class="ai-modes" role="radiogroup" aria-label="وضع المساعد">
+          <button class="ai-mode-btn active" role="radio" aria-checked="true" data-mode="explain" aria-label="اشرح لي">
+            <span class="ai-mode-icon">💡</span>
+            <span class="ai-mode-name">اشرح لي</span>
+          </button>
+          <button class="ai-mode-btn" role="radio" aria-checked="false" data-mode="correct" aria-label="صحح لي">
+            <span class="ai-mode-icon">✏️</span>
+            <span class="ai-mode-name">صحح لي</span>
+          </button>
+          <button class="ai-mode-btn" role="radio" aria-checked="false" data-mode="practice" aria-label="تدرب معي">
+            <span class="ai-mode-icon">🎯</span>
+            <span class="ai-mode-name">تدرب معي</span>
+          </button>
+          <button class="ai-mode-btn" role="radio" aria-checked="false" data-mode="chat" aria-label="تحدث معي">
+            <span class="ai-mode-icon">🗣️</span>
+            <span class="ai-mode-name">تحدث معي</span>
+          </button>
+          <button class="ai-mode-btn" role="radio" aria-checked="false" data-mode="grammar" aria-label="قواعد">
+            <span class="ai-mode-icon">📐</span>
+            <span class="ai-mode-name">قواعد</span>
+          </button>
+          <button class="ai-mode-btn" role="radio" aria-checked="false" data-mode="vocabulary" aria-label="كلمات">
+            <span class="ai-mode-icon">📖</span>
+            <span class="ai-mode-name">كلمات</span>
+          </button>
+        </div>
+
+        <div class="ai-chat-area" id="ai-chat-area" role="log" aria-label="محادثة Bat" aria-live="polite">
+          <div class="ai-welcome">
+            <div class="ai-welcome-avatar" aria-hidden="true">🤖</div>
+            <p class="ai-welcome-text">مرحباً! أنا Bat، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</p>
+          </div>
+        </div>
+
+        <div class="ai-suggestions" id="ai-suggestions" role="list" aria-label="اقتراحات سريعة">
+          <button class="ai-suggestion-chip" role="listitem" data-suggestion="اشرح لي تصريف动词 sein">اشرح لي verb sein</button>
+          <button class="ai-suggestion-chip" role="listitem" data-suggestion="ما الفرق بين der و die و das?">الفروق بين الأحرف</button>
+          <button class="ai-suggestion-chip" role="listitem" data-suggestion="علّمني كلمات عن الطعام">كلمات عن الطعام</button>
+          <button class="ai-suggestion-chip" role="listitem" data-suggestion="ękorrekt هذه الجملة">صحح لي جملة</button>
+        </div>
+
+        <div class="ai-input-area">
+          <div class="ai-input-wrapper">
+            <textarea class="ai-input" id="ai-input" placeholder="اكتب رسالتك هنا..." rows="1" aria-label="اكتب رسالتك لـ Bat"></textarea>
+            <button class="ai-send-btn" id="ai-send-btn" aria-label="إرسال الرسالة">
+              <span class="ai-send-icon">&#10148;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- PAGE: PROGRESS                -->
+    <!-- ============================= -->
+    <section id="page-progress" class="page" style="display:none" aria-label="تقدمي">
+
+      <div class="tabs-header" role="tablist" aria-label="أقسام التقدم">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="progress-summary" id="tab-progress-summary" data-tab="progress-summary">ملخص</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="progress-path" id="tab-progress-path" data-tab="progress-path">مسار التعلم</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="progress-mywords" id="tab-progress-mywords" data-tab="progress-mywords">كلماتي</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="progress-achievements" id="tab-progress-achievements" data-tab="progress-achievements">إنجازاتي</button>
+      </div>
+
+      <!-- Sub-page: Summary -->
+      <div class="tab-page active" id="progress-summary" role="tabpanel" aria-labelledby="tab-progress-summary">
+        <div class="section-container">
+          <h2 class="section-title">ملخص التقدم</h2>
+          <div class="stats-grid" role="list" aria-label="إحصائيات التعلم">
+            <div class="stat-card" role="listitem">
+              <div class="stat-icon">🔥</div>
+              <div class="stat-value" id="stat-streak">0</div>
+              <div class="stat-label">أيام متتالية</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-value" id="stat-xp">0</div>
+              <div class="stat-label">نقاط الخبرة</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-icon">📚</div>
+              <div class="stat-value" id="stat-words">0</div>
+              <div class="stat-label">كلمة محفوظة</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-icon">📝</div>
+              <div class="stat-value" id="stat-lessons">0</div>
+              <div class="stat-label">درس مكتمل</div>
+            </div>
+          </div>
+          <div class="weekly-chart-container">
+            <h3 class="chart-title">نشاط هذا الأسبوع</h3>
+            <canvas id="weekly-chart" aria-label="رسم بياني للنشاط الأسبوعي" role="img"></canvas>
+          </div>
+          <div class="daily-progress-section">
+            <h3 class="chart-title">التقدم اليومي</h3>
+            <div class="daily-goal-display">
+              <div class="daily-progress-bar">
+                <div class="daily-progress-fill" id="daily-progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <span class="daily-progress-text" id="daily-progress-text">0 / 10 كلمة اليوم</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Learning Path -->
+      <div class="tab-page" id="progress-path" role="tabpanel" aria-labelledby="tab-progress-path" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">مسار التعلم</h2>
+          <div class="learning-path" id="learning-path" role="list" aria-label="مسار التعلم من A1 إلى C2">
+            <div class="path-item completed" role="listitem" data-path-level="A1">
+              <div class="path-node">
+                <span class="path-check" aria-hidden="true">&#10003;</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-a1">A1</div>
+                <h3 class="path-level-name">المبتدئ</h3>
+                <p class="path-desc">التحيات، الأرقام، الأحرف، جمل بسيطة</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="path-item active" role="listitem" data-path-level="A2">
+              <div class="path-node">
+                <span class="path-number">2</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-a2">A2</div>
+                <h3 class="path-level-name">ما قبل المتوسط</h3>
+                <p class="path-desc">المفردات اليومية، الأفعال الشائعة، الأسئلة البسيطة</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="path-item" role="listitem" data-path-level="B1">
+              <div class="path-node">
+                <span class="path-number">3</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-b1">B1</div>
+                <h3 class="path-level-name">المتوسط</h3>
+                <p class="path-desc">القواعد المتوسطة، المحادثات اليومية، النصوص البسيطة</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="path-item" role="listitem" data-path-level="B2">
+              <div class="path-node">
+                <span class="path-number">4</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-b2">B2</div>
+                <h3 class="path-level-name">فوق المتوسط</h3>
+                <p class="path-desc">النصوص المعقدة، التعبير عن الآراء، السياق المهني</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="path-item" role="listitem" data-path-level="C1">
+              <div class="path-node">
+                <span class="path-number">5</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-c1">C1</div>
+                <h3 class="path-level-name">المتقدم</h3>
+                <p class="path-desc">النصوص الأدبية، المحادثات العميقة، الكتابة الأكاديمية</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div class="path-item" role="listitem" data-path-level="C2">
+              <div class="path-node">
+                <span class="path-number">6</span>
+              </div>
+              <div class="path-card">
+                <div class="path-level-badge level-c2">C2</div>
+                <h3 class="path-level-name">الإتقان</h3>
+                <p class="path-desc">إتقان اللغة، الفروق الدقيقة، اللغة الأدبية والعلمية</p>
+                <div class="path-progress-bar">
+                  <div class="path-progress-fill" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: My Words -->
+      <div class="tab-page" id="progress-mywords" role="tabpanel" aria-labelledby="tab-progress-mywords" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">كلماتي</h2>
+          <div class="mywords-tabs" role="tablist" aria-label="تصنيف الكلمات">
+            <button class="mywords-tab active" role="tab" aria-selected="true" data-mywords-tab="new">جديد</button>
+            <button class="mywords-tab" role="tab" aria-selected="false" data-mywords-tab="learning">أتعلم</button>
+            <button class="mywords-tab" role="tab" aria-selected="false" data-mywords-tab="known">أعرف</button>
+          </div>
+          <div class="mywords-list" id="mywords-new" role="tabpanel" aria-label="كلمات جديدة">
+            <div class="mywords-empty">
+              <span aria-hidden="true">📭</span>
+              <p>لا توجد كلمات جديدة بعد. ابدأ بتعلم المفردات!</p>
+            </div>
+          </div>
+          <div class="mywords-list" id="mywords-learning" role="tabpanel" aria-label="كلمات أتعلمها" style="display:none">
+            <div class="mywords-empty">
+              <span aria-hidden="true">📭</span>
+              <p>لا توجد كلمات قيد التعلم.</p>
+            </div>
+          </div>
+          <div class="mywords-list" id="mywords-known" role="tabpanel" aria-label="كلمات أعرفها" style="display:none">
+            <div class="mywords-empty">
+              <span aria-hidden="true">📭</span>
+              <p>لا توجد كلمات محفوظة بعد.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-page: Achievements -->
+      <div class="tab-page" id="progress-achievements" role="tabpanel" aria-labelledby="tab-progress-achievements" style="display:none">
+        <div class="section-container">
+          <h2 class="section-title">إنجازاتي</h2>
+          <div class="achievements-grid" id="achievements-grid" role="list" aria-label="الإنجازات">
+            <div class="achievement-card locked" role="listitem" data-achievement="first-lesson">
+              <div class="achievement-badge" aria-hidden="true">🏆</div>
+              <h3 class="achievement-name">أول درس</h3>
+              <p class="achievement-desc">أكمل أول درس تعلم</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="first-quiz">
+              <div class="achievement-badge" aria-hidden="true">🏆</div>
+              <h3 class="achievement-name">أول اختبار</h3>
+              <p class="achievement-desc">أكمل أول اختبار تدريبي</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="words-10">
+              <div class="achievement-badge" aria-hidden="true">🏆</div>
+              <h3 class="achievement-name">10 كلمات</h3>
+              <p class="achievement-desc">احفظ 10 كلمات جديدة</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="words-50">
+              <div class="achievement-badge" aria-hidden="true">🏆</div>
+              <h3 class="achievement-name">50 كلمة</h3>
+              <p class="achievement-desc">احفظ 50 كلمة جديدة</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="words-100">
+              <div class="achievement-badge" aria-hidden="true">🏆</div>
+              <h3 class="achievement-name">100 كلمة</h3>
+              <p class="achievement-desc">احفظ 100 كلمة جديدة</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="streak-3">
+              <div class="achievement-badge" aria-hidden="true">🔥</div>
+              <h3 class="achievement-name">3 أيام متتالية</h3>
+              <p class="achievement-desc">تعلم 3 أيام متتالية</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="streak-7">
+              <div class="achievement-badge" aria-hidden="true">🔥</div>
+              <h3 class="achievement-name">أسبوع كامل</h3>
+              <p class="achievement-desc">تعلم 7 أيام متتالية</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="streak-30">
+              <div class="achievement-badge" aria-hidden="true">🔥</div>
+              <h3 class="achievement-name">شهر كامل</h3>
+              <p class="achievement-desc">تعلم 30 يوماً متتالية</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="quiz-perfect">
+              <div class="achievement-badge" aria-hidden="true">⭐</div>
+              <h3 class="achievement-name">درجة كاملة</h3>
+              <p class="achievement-desc">احصل على 100% في اختبار</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="level-a2">
+              <div class="achievement-badge" aria-hidden="true">📈</div>
+              <h3 class="achievement-name">وصول A2</h3>
+              <p class="achievement-desc">أكمل مستوى A2</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="level-b1">
+              <div class="achievement-badge" aria-hidden="true">📈</div>
+              <h3 class="achievement-name">وصول B1</h3>
+              <p class="achievement-desc">أكمل مستوى B1</p>
+            </div>
+            <div class="achievement-card locked" role="listitem" data-achievement="chat-10">
+              <div class="achievement-badge" aria-hidden="true">🤖</div>
+              <h3 class="achievement-name">محادثة مع Bat</h3>
+              <p class="achievement-desc">أرسل 10 رسائل لمساعد Bat</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- ============================= -->
+    <!-- PAGE: PLACEMENT QUIZ          -->
+    <!-- ============================= -->
+    <section id="page-placement" class="page" style="display:none" aria-label="اختبار التحديد">
+
+      <!-- Placement Welcome Screen -->
+      <div class="placement-welcome" id="placement-welcome">
+        <div class="placement-welcome-card">
+          <div class="placement-icon" aria-hidden="true">📋</div>
+          <h2 class="placement-title">اختبار تحديد المستوى</h2>
+          <p class="placement-desc">أجب على 20 سؤالاً لتحديد مستواك الحالي في اللغة الألمانية. الاختبار يغطي A1 إلى C2.</p>
+          <ul class="placement-features">
+            <li>⏱️ يستغرق حوالي 5 دقائق</li>
+            <li>📊 نتائج فورية بعد الانتهاء</li>
+            <li>🎯 توصية بمستواك المناسب</li>
+          </ul>
+          <button class="btn btn-gold btn-lg" id="placement-start-btn" aria-label="ابدأ اختبار التحديد">ابدأ اختبار التحديد</button>
+        </div>
+      </div>
+
+      <!-- Placement Quiz Area (hidden initially) -->
+      <div class="placement-quiz-area" id="placement-quiz-area" style="display:none">
+        <div class="placement-progress-container">
+          <div class="placement-progress-bar" id="placement-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="placement-progress-fill"></div>
+          </div>
+          <span class="placement-progress-text" id="placement-progress-text">1 / 20</span>
+        </div>
+
+        <div class="placement-question-card" id="placement-question-card">
+          <p class="placement-question-text" id="placement-question-text"></p>
+          <div class="placement-options" id="placement-options" role="radiogroup" aria-label="خيارات الإجابة"></div>
+        </div>
+
+        <div class="placement-actions">
+          <button class="btn btn-red" id="placement-next-btn" style="display:none" aria-label="السؤال التالي">السؤال التالي &larr;</button>
+        </div>
+      </div>
+
+      <!-- Placement Results (hidden initially) -->
+      <div class="placement-results" id="placement-results" style="display:none">
+        <div class="placement-results-card">
+          <div class="placement-results-icon" aria-hidden="true">🎉</div>
+          <h2 class="placement-results-title">نتيجة الاختبار</h2>
+          <div class="placement-level-result">
+            <span class="placement-result-label">مستواك الموصى به:</span>
+            <span class="placement-result-level" id="placement-result-level">A1</span>
+          </div>
+          <div class="placement-score-display">
+            <span class="placement-score-number" id="placement-score-number">0</span>
+            <span class="placement-score-total">/ 20</span>
+          </div>
+          <p class="placement-result-msg" id="placement-result-msg"></p>
+          <div class="placement-results-actions">
+            <button class="btn btn-gold btn-lg" id="placement-learn-btn" data-page="page-learn">ابدأ التعلم</button>
+            <button class="btn btn-outline" id="placement-retry-btn">أعد الاختبار</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================= -->
+    <!-- PAGE: SETTINGS                -->
+    <!-- ============================= -->
+    <section id="page-settings" class="page" style="display:none" aria-label="الإعدادات">
+      <div class="section-container">
+        <div class="settings-header">
+          <h1 class="section-title">الإعدادات</h1>
+          <button class="btn btn-outline btn-back" id="settings-back-btn" aria-label="العودة">&rarr; العودة</button>
+        </div>
+
+        <!-- Data Management -->
+        <div class="settings-group">
+          <h3 class="settings-group-title">إدارة البيانات</h3>
+          <div class="settings-cards">
+            <div class="settings-card">
+              <div class="settings-card-info">
+                <h4 class="settings-card-title">تصدير البيانات</h4>
+                <p class="settings-card-desc">حفظ تقدمك وبياناتك كملف JSON</p>
+              </div>
+              <button class="btn btn-outline btn-sm" id="settings-export-btn" aria-label="تصدير البيانات">تصدير</button>
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-info">
+                <h4 class="settings-card-title">استيراد البيانات</h4>
+                <p class="settings-card-desc">استعادة بياناتك من ملف محفوظ</p>
+              </div>
+              <label class="btn btn-outline btn-sm" id="settings-import-label" for="settings-import-file" aria-label="استيراد البيانات">استيراد</label>
+              <input type="file" id="settings-import-file" accept=".json" style="display:none" aria-hidden="true">
+            </div>
+            <div class="settings-card">
+              <div class="settings-card-info">
+                <h4 class="settings-card-title">مسح جميع البيانات</h4>
+                <p class="settings-card-desc">حذف جميع التقدم والبيانات المحفوظة</p>
+              </div>
+              <button class="btn btn-red btn-sm" id="settings-reset-btn" aria-label="مسح جميع البيانات">مسح</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Goal -->
+        <div class="settings-group">
+          <h3 class="settings-group-title">الهدف اليومي</h3>
+          <div class="settings-card">
+            <div class="settings-card-info">
+              <h4 class="settings-card-title">عدد الكلمات يومياً</h4>
+              <p class="settings-card-desc">حدد عدد الكلمات التي تريد تعلمها يومياً</p>
+            </div>
+            <div class="daily-goal-control">
+              <input type="range" id="daily-goal-slider" min="10" max="50" value="10" step="5" class="goal-slider" aria-label="الهدف اليومي - عدد الكلمات">
+              <span class="daily-goal-value" id="daily-goal-value">10</span>
+              <span class="daily-goal-unit">كلمة/يوم</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appearance -->
+        <div class="settings-group">
+          <h3 class="settings-group-title">المظهر</h3>
+          <div class="settings-card">
+            <div class="settings-card-info">
+              <h4 class="settings-card-title">الوضع الداكن</h4>
+              <p class="settings-card-desc">تفعيل المظهر الداكن للعينين</p>
+            </div>
+            <label class="toggle-switch" for="dark-mode-toggle" aria-label="تفعيل الوضع الداكن">
+              <input type="checkbox" id="dark-mode-toggle" class="toggle-input">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="settings-group">
+          <h3 class="settings-group-title">حول</h3>
+          <div class="settings-card">
+            <div class="settings-card-info">
+              <h4 class="settings-card-title">Deutsch fuer Araber</h4>
+              <p class="settings-card-desc">منصة مجانية لتعلم اللغة الألمانية للمتحدثين بالعربية</p>
+              <p class="settings-card-version">الإصدار 1.0.0</p>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-info">
+              <h4 class="settings-card-title">الخصوصية</h4>
+              <p class="settings-card-desc">جميع بياناتك محفوظة محلياً في متصفحك. لا يتم إرسال أي بيانات لخوادم خارجية. يمكنك تصدير أو حذف بياناتك في أي وقت من قسم إدارة البيانات.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <h3 class="modal-title" id="modal-title">تأكيد</h3>
+      <p class="modal-message" id="modal-message"></p>
+      <div class="modal-actions">
+        <button class="btn btn-red" id="modal-confirm-btn">تأكيد</button>
+        <button class="btn btn-outline" id="modal-cancel-btn">إلغاء</button>
+      </div>
     </div>
-    <div class="quiz-count-selector">
-      <label>عدد الأسئلة:</label>
-      <select id="quizCount">
-        <option value="5">5 أسئلة</option>
-        <option value="10" selected>10 أسئلة</option>
-        <option value="15">15 سؤال</option>
-        <option value="20">20 سؤال</option>
-      </select>
-    </div>
   </div>
-  <div id="quizArea" style="max-width:700px;margin:0 auto;padding:32px 16px"></div>
-</div>
 
-<div class="page" id="page-flashcards">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg></div>
-    <h1>البطاقات التعليمية</h1>
-    <p>راجع المفردات بطريقة ذكية مع التكرار المتباعد</p>
-  </div>
-  <div id="flashcardArea" style="max-width:600px;margin:0 auto;padding:32px 16px">
-    <div class="fc-start">
-      <div class="fc-start-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg></div>
-      <h2>جرّب البطاقات التعليمية</h2>
-      <p>راجع الكلمات اللي اتعلمتها أو ابدأ تعلم كلمات جديدة</p>
-      <button class="btn-primary" onclick="startFlashcards('flashcardArea')">ابدأ المراجعة</button>
-    </div>
-  </div>
-</div>
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-<div class="page" id="page-mywords">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-    <h1>كلماتي</h1>
-    <p>تابع الكلمات اللي اتعلمتها وراجعها</p>
-  </div>
-  <div id="myWordsArea" style="max-width:1100px;margin:0 auto;padding:32px 16px"></div>
-</div>
+  <!-- Scripts (order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/spaced-repetition.js"></script>
+  <script src="js/placement.js"></script>
+  <script src="js/flashcards.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/learning-path.js"></script>
+  <script src="js/app.js"></script>
 
-<div class="page" id="page-dashboard">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
-    <h1>لوحة التقدم</h1>
-    <p>تابع تقدمك وإنجازاتك في تعلم الألماني</p>
-  </div>
-  <div id="dashboardArea" style="max-width:1100px;margin:0 auto;padding:32px 16px"></div>
-</div>
-
-<div class="page" id="page-path">
-  <div class="page-banner">
-    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-    <h1>مسار التعلم</h1>
-    <p>تابع تقدمك من A1 لحد C2 خطوة بخطوة</p>
-  </div>
-  <div id="learningPathArea" style="max-width:800px;margin:0 auto;padding:32px 16px"></div>
-</div>
-
-<footer class="site-footer">
-  صُنع بواسطة <strong>zaiedd</strong> &mdash; Deutsch للعرب
-</footer>
-
-<button class="ai-fab" id="aiFab" onclick="toggleAIChat()" title="Bat"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 3l1.6 4.7L18.3 9l-4.7 1.6L12 15.3l-1.6-4.7L5.7 9l4.7-1.3z"/><path d="M18.5 14.5l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8z"/></svg></button>
-<div class="ai-panel" id="aiPanel">
-  <div class="ai-head">
-    <div class="ai-head-title"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><path d="M12 3l1.6 4.7L18.3 9l-4.7 1.6L12 15.3l-1.6-4.7L5.7 9l4.7-1.3z"/><path d="M18.5 14.5l.8 2.3 2.3.8-2.3.8-.8 2.3-.8-2.3-2.3-.8 2.3-.8z"/></svg> Bat</div>
-    <button class="ai-close" onclick="toggleAIChat()">✕</button>
-  </div>
-  <div class="ai-messages" id="aiMessages">
-    <div class="ai-msg bot">أهلاً! أنا Bat، مساعدك في تعلم الألماني 🇩🇪 اسألني عن أي كلمة، قاعدة نحوية، أو ترجمة جملة، أو اكتب جملة بالألماني وأنا أصححهالك.</div>
-  </div>
-  <div class="ai-input-row">
-    <input type="text" id="aiInput" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter')sendAIMessage()">
-    <button class="ai-send" id="aiSendBtn" onclick="sendAIMessage()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L11 13M21 3l-6.5 18-4-8-8-4z"/></svg></button>
-  </div>
-</div>
-
-<script src="js/data.js"></script>
-<script src="js/app.js"></script>
-<script src="js/progress.js"></script>
-<script src="js/spaced-repetition.js"></script>
-<script src="js/quiz.js"></script>
-<script src="js/flashcards.js"></script>
-<script src="js/dashboard.js"></script>
-<script src="js/learning-path.js"></script>
 </body>
 </html>
