@@ -566,7 +566,7 @@ body.no-scroll{overflow:hidden}
 .ai-mode-btn.active{background:var(--red);border-color:var(--red);color:#fff}
 
 /* ============ Dark Mode ============ */
-[data-theme="dark"]{--black:#1a1a1a;--white:#121212;--gray1:#1e1e1e;--gray2:#333;--gray3:#888;--text:#e0e0e0;--text2:#a0a0a0}
+[data-theme="dark"]{--black:#e0e0e0;--white:#121212;--gray1:#1e1e1e;--gray2:#333;--gray3:#888;--text:#e0e0e0;--text2:#a0a0a0}
 [data-theme="dark"] *{color:inherit}
 [data-theme="dark"] body{background:#121212;color:#e0e0e0}
 [data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3,[data-theme="dark"] h4,[data-theme="dark"] h5,[data-theme="dark"] h6,[data-theme="dark"] strong,[data-theme="dark"] b{color:#e0e0e0 !important}
@@ -597,8 +597,17 @@ body.no-scroll{overflow:hidden}
 [data-theme="dark"] .card-btn.learned{background:#3a3000;color:#e0c000 !important;border-color:#554400}
 [data-theme="dark"] .card-back .card-example{background:#1a1a1a;color:#a0a0a0 !important}
 [data-theme="dark"] .gram-card{background:#1e1e1e;border-color:#333}
-[data-theme="dark"] .gram-card h3{color:#e0e0e0 !important}
-[data-theme="dark"] .gram-card p{color:#a0a0a0 !important}
+[data-theme="dark"] .gram-head{background:#1e1e1e}
+[data-theme="dark"] .gram-head:hover{background:#2a2a2a}
+[data-theme="dark"] .gram-title{color:#e0e0e0 !important}
+[data-theme="dark"] .gram-explain{color:#a0a0a0 !important}
+[data-theme="dark"] .gram-table{border-color:#333}
+[data-theme="dark"] .gram-table th{background:#2a2a2a;color:#a0a0a0 !important;border-color:#333}
+[data-theme="dark"] .gram-table td{border-color:#333;color:#e0e0e0 !important}
+[data-theme="dark"] .gram-table td:first-child{color:#e0e0e0 !important}
+[data-theme="dark"] .gram-examples{background:#1a1a1a}
+[data-theme="dark"] .gram-ex-item .de{color:#e0e0e0 !important}
+[data-theme="dark"] .gram-ex-item .ar{color:#a0a0a0 !important}
 [data-theme="dark"] .listen-card{background:#1e1e1e;border-color:#333}
 [data-theme="dark"] .listen-card span{color:#e0e0e0 !important}
 [data-theme="dark"] .read-card{background:#1e1e1e;border-color:#333}
