@@ -113,9 +113,12 @@ const LearningPath = {
     if (typeof DATA === 'undefined' || !DATA[levelId] || !DATA[levelId].categories) {
       return 0;
     }
-    DATA[levelId].categories.forEach(function (cat) {
-      if (cat.words) total += cat.words.length;
-    });
+    var cats = DATA[levelId].categories;
+    for (var catName in cats) {
+      if (Array.isArray(cats[catName])) {
+        total += cats[catName].length;
+      }
+    }
     return total;
   },
 
@@ -126,14 +129,15 @@ const LearningPath = {
 
     const learnedSet = new Set(p.wordsLearned);
     let count = 0;
-    DATA[levelId].categories.forEach(function (cat) {
-      if (cat.words) {
-        cat.words.forEach(function (w) {
+    var cats = DATA[levelId].categories;
+    for (var catName in cats) {
+      if (Array.isArray(cats[catName])) {
+        cats[catName].forEach(function (w) {
           const word = typeof w === 'string' ? w : w.word || w.de;
           if (learnedSet.has(word)) count++;
         });
       }
-    });
+    }
     return count;
   },
 
