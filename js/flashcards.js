@@ -97,17 +97,17 @@ const Flashcards = {
           '<div class="fc-card-inner">' +
             '<div class="fc-front">' +
               (artLabel ? '<span class="fc-article ' + artClass + '">' + artLabel + '</span>' : '') +
-              '<div class="fc-de">' + card.de + '</div>' +
+              '<div class="fc-de">' + card.de + ' <button class="speak-btn" onclick="event.stopPropagation();speakGerman(\'' + card.de.replace(/'/g, "\\'") + '\')" title="اسمع النطق">🔊</button></div>' +
               '<div class="fc-ar">' + (card.ar || '') + '</div>' +
             '</div>' +
             '<div class="fc-back">' +
               (artLabel ? '<span class="fc-article ' + artClass + '">' + artLabel + '</span>' : '') +
-              '<div class="fc-de">' + card.de + '</div>' +
+              '<div class="fc-de">' + card.de + ' <button class="speak-btn" onclick="event.stopPropagation();speakGerman(\'' + card.de.replace(/'/g, "\\'") + '\')" title="اسمع النطق">🔊</button></div>' +
               (card.phonetic ? '<div class="fc-phonetic">/' + card.phonetic + '/</div>' : '') +
               '<div class="fc-ar">' + (card.ar || '') + '</div>' +
               (hasExample ?
                 '<div class="fc-example">' +
-                  '<div>' + card.example + '</div>' +
+                  '<div>' + card.example + ' <button class="speak-btn speak-btn-sm" onclick="event.stopPropagation();speakGerman(\'' + card.example.replace(/'/g, "\\'") + '\')" title="اسمع الجملة">🔊</button></div>' +
                   (card.ex_ar ? '<div class="fc-ex-ar">' + card.ex_ar + '</div>' : '') +
                 '</div>' : '') +
             '</div>' +

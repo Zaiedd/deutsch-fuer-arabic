@@ -67,6 +67,22 @@ let gramInit=false, listenInit=false, readInit=false, blogInit=false;
 let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, pathInit=false;
 
 // ============ VOCAB PAGE (existing) ============
+function speakGerman(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE';
+  u.rate = 0.85;
+  u.pitch = 1;
+  var voices = speechSynthesis.getVoices();
+  var deVoice = voices.find(function(v) { return v.lang.startsWith('de'); });
+  if (deVoice) u.voice = deVoice;
+  speechSynthesis.speak(u);
+}
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
+}
+
 let currentLevel = 'A1';
 let currentCat = null;
 let learnedWords = {};
@@ -156,10 +172,10 @@ function renderWords() {
     const hasEx = w.example && w.example.trim();
     return '<div class="word-card" id="' + cardId + '">' +
       '<div class="card-front" onclick="flipCard(\'' + cardId + '\')">' +
-        '<div class="card-de">' + w.de + '</div>' +
+        '<div class="card-de">' + w.de + ' <button class="speak-btn" onclick="event.stopPropagation();speakGerman(\'' + w.de.replace(/'/g, "\\'") + '\')" title="اسمع النطق">🔊</button></div>' +
         (artLabel ? '<span class="card-article ' + artClass + '">' + artLabel + '</span>' : '') +
         '<div class="card-ar">' + (w.ar || '') + '</div>' +
-        '<div class="card-ex">' + (hasEx ? w.example : '<span class="no-example">لا يوجد مثال</span>') + '</div>' +
+        '<div class="card-ex">' + (hasEx ? '<span class="ex-de">' + w.example + ' <button class="speak-btn speak-btn-sm" onclick="event.stopPropagation();speakGerman(\'' + w.example.replace(/'/g, "\\'") + '\')" title="اسمع الجملة">🔊</button></span>' : '<span class="no-example">لا يوجد مثال</span>') + '</div>' +
         '<div class="card-actions">' +
           '<button class="card-btn" onclick="event.stopPropagation();flipCard(\'' + cardId + '\')"><span class="btn-icon">' + ICONS.refresh + '</span> اقلب</button>' +
           '<button class="card-btn ' + (isLearned ? 'learned' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + key + '\',this)"><span class="btn-icon">' + (isLearned ? ICONS.checkSmall : ICONS.star) + '</span> ' + (isLearned ? 'حفظتها' : 'حفظتها؟') + '</button>' +
