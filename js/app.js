@@ -67,72 +67,50 @@ let gramInit=false, listenInit=false, readInit=false, blogInit=false;
 let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, pathInit=false;
 
 // ============ VOCAB PAGE (existing) ============
-var _speechQueue = [];
-var _speechPlaying = false;
-
 function speakGerman(text) {
   if (!text || !text.trim()) return;
   text = text.trim();
 
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang = 'de-DE';
-    u.rate = 0.85;
-    u.pitch = 1;
-    u.volume = 1;
-
-    var voices = window.speechSynthesis.getVoices();
-    var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
-                  voices.find(function(v) { return v.lang === 'de-AT'; }) ||
-                  voices.find(function(v) { return v.lang === 'de-CH'; }) ||
-                  voices.find(function(v) { return v.lang.indexOf('de') === 0; });
-    if (deVoice) u.voice = deVoice;
-
-    u.onerror = function() {
-      _tryGoogleTTS(text);
-    };
-
-    window.speechSynthesis.speak(u);
-
-    // Chrome workaround: restart if it stops
-    var checkInterval = setInterval(function() {
-      if (!window.speechSynthesis.speaking) {
-        clearInterval(checkInterval);
-      } else {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }
-    }, 10000);
-
-    // If nothing happens in 500ms, fallback to Google
-    setTimeout(function() {
-      if (!window.speechSynthesis.speaking) {
-        _tryGoogleTTS(text);
-      }
-    }, 500);
-  } else {
-    _tryGoogleTTS(text);
+  if (!('speechSynthesis' in window)) {
+    alert('متصفحك مش بيدعم النطق. استخدم Chrome أو Edge.');
+    return;
   }
-}
 
-function _tryGoogleTTS(text) {
-  try {
-    var url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=de&client=tw-ob&q=' + encodeURIComponent(text);
-    var audio = new Audio(url);
-    audio.volume = 1;
-    audio.play().catch(function() {
-      console.log('TTS not available for: ' + text);
-    });
-  } catch(e) {}
+  window.speechSynthesis.cancel();
+
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE';
+  u.rate = 0.85;
+  u.pitch = 1;
+  u.volume = 1;
+
+  var voices = window.speechSynthesis.getVoices();
+  var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
+                voices.find(function(v) { return v.lang === 'de-AT'; }) ||
+                voices.find(function(v) { return v.lang === 'de-CH'; }) ||
+                voices.find(function(v) { return v.lang.indexOf('de') === 0; });
+
+  if (deVoice) {
+    u.voice = deVoice;
+  }
+
+  window.speechSynthesis.speak(u);
+
+  // Chrome bug: restart speech every 10s so it doesn't stop
+  var _ttsRestart = setInterval(function() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+      window.speechSynthesis.resume();
+    } else {
+      clearInterval(_ttsRestart);
+    }
+  }, 10000);
 }
 
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = function() {
     window.speechSynthesis.getVoices();
   };
-  // Pre-load voices
   window.speechSynthesis.getVoices();
 }
 
