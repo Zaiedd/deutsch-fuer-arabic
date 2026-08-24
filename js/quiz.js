@@ -320,17 +320,17 @@ const QuizEngine = {
   },
 
   getContainer() {
-    return document.getElementById('quiz-area');
+    return document.getElementById('quizArea');
   },
 
-  show(containerId = 'quiz-area') {
+  show(containerId = 'quizArea') {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.style.display = 'block';
     container.scrollIntoView({ behavior: 'smooth' });
   },
 
-  hide(containerId = 'quiz-area') {
+  hide(containerId = 'quizArea') {
     const container = document.getElementById(containerId);
     if (container) container.style.display = 'none';
   }
@@ -340,7 +340,7 @@ window.quizState = {
   level: null,
   type: null,
   count: 10,
-  containerId: 'quiz-area'
+  containerId: 'quizArea'
 };
 
 function handleQuizAnswer(qIndex, optIndex) {
@@ -378,7 +378,7 @@ function handleQuizBack() {
   }
 }
 
-function startQuiz(level, type, count = 10, containerId = 'quiz-area') {
+function startQuiz(level, type, count = 10, containerId = 'quizArea') {
   window.quizState = { level, type, count, containerId };
   QuizEngine.startQuiz(level, type, count);
   const container = document.getElementById(containerId);

@@ -342,11 +342,11 @@ const Dashboard = {
     if (typeof startQuiz === 'function') {
       var data = Progress.load();
       var level = data.level || 'A1';
-      var quizArea = document.getElementById('quiz-area');
+      var quizArea = document.getElementById('quizArea');
       if (quizArea) {
         quizArea.style.display = 'block';
         quizArea.scrollIntoView({ behavior: 'smooth' });
-        startQuiz(level, 'mixed', 10, 'quiz-area');
+        startQuiz(level, 'mixed', 10, 'quizArea');
       }
     } else if (typeof switchPage === 'function') {
       switchPage('quiz');
