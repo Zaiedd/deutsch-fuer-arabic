@@ -99,7 +99,7 @@ const LearningPath = {
       // ignore
     }
     return {
-      wordsLearned: [],
+      wordsLearned: {},
       wordsMastered: [],
       quizHistory: [],
       totalXP: 0,
@@ -127,7 +127,7 @@ const LearningPath = {
     if (!p || !p.wordsLearned) return 0;
     if (!DATA[levelId] || !DATA[levelId].categories) return 0;
 
-    const learnedSet = new Set(p.wordsLearned);
+    const learnedSet = new Set(Object.keys(p.wordsLearned));
     let count = 0;
     var cats = DATA[levelId].categories;
     for (var catName in cats) {
