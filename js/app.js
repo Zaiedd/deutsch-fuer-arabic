@@ -68,19 +68,32 @@ let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, path
 
 // ============ VOCAB PAGE (existing) ============
 function speakGerman(text) {
-  if (!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
+  if (!('speechSynthesis' in window)) {
+    alert('متصفحك مش بيدعم النطق. جرّب Chrome أو Edge.');
+    return;
+  }
+  window.speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(text);
   u.lang = 'de-DE';
-  u.rate = 0.85;
+  u.rate = 0.8;
   u.pitch = 1;
-  var voices = speechSynthesis.getVoices();
-  var deVoice = voices.find(function(v) { return v.lang.startsWith('de'); });
-  if (deVoice) u.voice = deVoice;
-  speechSynthesis.speak(u);
+  u.volume = 1;
+  var voices = window.speechSynthesis.getVoices();
+  var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
+                voices.find(function(v) { return v.lang.startsWith('de'); });
+  if (deVoice) {
+    u.voice = deVoice;
+  }
+  u.onerror = function(e) {
+    console.log('Speech error:', e);
+  };
+  window.speechSynthesis.speak(u);
 }
 if ('speechSynthesis' in window) {
-  speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
+  window.speechSynthesis.onvoiceschanged = function() {
+    window.speechSynthesis.getVoices();
+  };
+  window.speechSynthesis.getVoices();
 }
 
 let currentLevel = 'A1';
@@ -172,10 +185,10 @@ function renderWords() {
     const hasEx = w.example && w.example.trim();
     return '<div class="word-card" id="' + cardId + '">' +
       '<div class="card-front" onclick="flipCard(\'' + cardId + '\')">' +
-        '<div class="card-de">' + w.de + ' <button class="speak-btn" onclick="event.stopPropagation();speakGerman(\'' + w.de.replace(/'/g, "\\'") + '\')" title="اسمع النطق">🔊</button></div>' +
+        '<div class="card-de">' + w.de + ' <button class="speak-btn" onclick="event.stopPropagation();speakGerman(this.getAttribute(\'data-text\'))" data-text="' + w.de.replace(/"/g, '&quot;') + '" title="اسمع النطق">🔊</button></div>' +
         (artLabel ? '<span class="card-article ' + artClass + '">' + artLabel + '</span>' : '') +
         '<div class="card-ar">' + (w.ar || '') + '</div>' +
-        '<div class="card-ex">' + (hasEx ? '<span class="ex-de">' + w.example + ' <button class="speak-btn speak-btn-sm" onclick="event.stopPropagation();speakGerman(\'' + w.example.replace(/'/g, "\\'") + '\')" title="اسمع الجملة">🔊</button></span>' : '<span class="no-example">لا يوجد مثال</span>') + '</div>' +
+        '<div class="card-ex">' + (hasEx ? '<span class="ex-de">' + w.example + ' <button class="speak-btn speak-btn-sm" onclick="event.stopPropagation();speakGerman(this.getAttribute(\'data-text\'))" data-text="' + w.example.replace(/"/g, '&quot;') + '" title="اسمع الجملة">🔊</button></span>' : '<span class="no-example">لا يوجد مثال</span>') + '</div>' +
         '<div class="card-actions">' +
           '<button class="card-btn" onclick="event.stopPropagation();flipCard(\'' + cardId + '\')"><span class="btn-icon">' + ICONS.refresh + '</span> اقلب</button>' +
           '<button class="card-btn ' + (isLearned ? 'learned' : '') + '" onclick="event.stopPropagation();toggleLearned(\'' + key + '\',this)"><span class="btn-icon">' + (isLearned ? ICONS.checkSmall : ICONS.star) + '</span> ' + (isLearned ? 'حفظتها' : 'حفظتها؟') + '</button>' +
