@@ -68,26 +68,54 @@ let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, path
 
 // ============ VOCAB PAGE (existing) ============
 function speakGerman(text) {
+  if (!text || !text.trim()) return;
+  text = text.trim();
+
   if (!('speechSynthesis' in window)) {
-    alert('متصفحك مش بيدعم النطق. جرّب Chrome أو Edge.');
+    console.warn('speechSynthesis not supported');
     return;
   }
+
   window.speechSynthesis.cancel();
+
   var u = new SpeechSynthesisUtterance(text);
   u.lang = 'de-DE';
   u.rate = 0.8;
   u.pitch = 1;
   u.volume = 1;
+
   var voices = window.speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    window.speechSynthesis.getVoices();
+  }
+
   var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
-                voices.find(function(v) { return v.lang.startsWith('de'); });
+                voices.find(function(v) { return v.lang === 'de-AT'; }) ||
+                voices.find(function(v) { return v.lang === 'de-CH'; }) ||
+                voices.find(function(v) { return v.lang.indexOf('de') === 0; });
+
   if (deVoice) {
     u.voice = deVoice;
+    console.log('Using voice:', deVoice.name, deVoice.lang);
+  } else {
+    console.log('No German voice found, using default. Available voices:', voices.map(function(v){return v.lang}).join(', '));
   }
-  u.onerror = function(e) {
-    console.log('Speech error:', e);
-  };
+
+  u.onstart = function() { console.log('Speaking:', text); };
+  u.onerror = function(e) { console.error('Speech error:', e.error, e); };
+  u.onend = function() { console.log('Speech ended'); };
+
   window.speechSynthesis.speak(u);
+
+  // Chrome bug: speech stops after ~15 seconds. Workaround: resume periodically.
+  var resumeInterval = setInterval(function() {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+      window.speechSynthesis.resume();
+    } else {
+      clearInterval(resumeInterval);
+    }
+  }, 10000);
 }
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = function() {
