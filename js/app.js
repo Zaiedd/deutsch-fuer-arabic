@@ -85,10 +85,13 @@ function speakGerman(text) {
   u.volume = 1;
 
   var voices = window.speechSynthesis.getVoices();
+  if (!voices.length) {
+    setTimeout(function() { voices = window.speechSynthesis.getVoices(); }, 100);
+  }
   var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
                 voices.find(function(v) { return v.lang === 'de-AT'; }) ||
                 voices.find(function(v) { return v.lang === 'de-CH'; }) ||
-                voices.find(function(v) { return v.lang.indexOf('de') === 0; });
+                voices.find(function(v) { return (v.lang || '').indexOf('de') === 0; });
 
   if (deVoice) {
     u.voice = deVoice;
