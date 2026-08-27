@@ -67,40 +67,58 @@ let gramInit=false, listenInit=false, readInit=false, blogInit=false;
 let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, pathInit=false;
 
 // ============ VOCAB PAGE (existing) ============
+function _ttsToast(msg) {
+  var t = document.getElementById('ttsStatus');
+  if (!t) return;
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._h);
+  t._h = setTimeout(function() { t.style.opacity = '0'; }, 3500);
+}
+
 function speakGerman(text) {
   if (!text || !text.trim()) return;
   text = text.trim();
 
   if (!('speechSynthesis' in window)) {
-    alert('متصفحك مش بيدعم النطق. استخدم Chrome أو Edge.');
+    _ttsToast('متصفحك مش بيدعم النطق. استخدم Chrome أو Edge.');
     return;
   }
 
   window.speechSynthesis.cancel();
+
+  var voices = window.speechSynthesis.getVoices();
+  if (!voices.length) {
+    _ttsToast('⚠️ جاري تحميل الأصوات، اضغط تاني...');
+    setTimeout(function() { speakGerman(text); }, 250);
+    return;
+  }
+
+  // Prefer a LOCAL (offline) German voice first — more reliable, no internet needed.
+  var germans = voices.filter(function(v) { return (v.lang || '').toLowerCase().indexOf('de') === 0; });
+  var deVoice =
+    germans.find(function(v) { return v.localService; }) ||
+    germans.find(function(v) { return v.lang === 'de-DE'; }) ||
+    germans.find(function(v) { return v.lang === 'de-AT'; }) ||
+    germans[0];
 
   var u = new SpeechSynthesisUtterance(text);
   u.lang = 'de-DE';
   u.rate = 0.85;
   u.pitch = 1;
   u.volume = 1;
+  if (deVoice) u.voice = deVoice;
 
-  var voices = window.speechSynthesis.getVoices();
-  if (!voices.length) {
-    setTimeout(function() { speakGerman(text); }, 200);
+  if (!deVoice) {
+    _ttsToast('⚠️ لا يوجد صوت ألماني. ثبّت حزمة الصوت الألماني من إعدادات ويندوز.');
+    console.warn('TTS: no German voice found. Available:', voices.map(function(v) { return v.name + ' (' + v.lang + ', local=' + v.localService + ')'; }));
     return;
   }
-  var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
-                voices.find(function(v) { return v.lang === 'de-AT'; }) ||
-                voices.find(function(v) { return v.lang === 'de-CH'; }) ||
-                voices.find(function(v) { return (v.lang || '').indexOf('de') === 0; });
 
-  if (deVoice) {
-    u.voice = deVoice;
-  }
-  if (!deVoice) {
-    console.warn('TTS: no German voice found. Available:', voices.map(function(v) { return v.name + ' (' + v.lang + ')'; }));
-  }
-
+  _ttsToast('🔊 ' + deVoice.name);
+  u.onerror = function(e) {
+    _ttsToast('⚠️ خطأ في النطق: ' + (e.error || 'غير معروف'));
+  };
   window.speechSynthesis.speak(u);
 
   // Chrome bug: restart speech every 10s so it doesn't stop
