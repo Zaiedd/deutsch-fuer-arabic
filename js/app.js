@@ -86,7 +86,8 @@ function speakGerman(text) {
 
   var voices = window.speechSynthesis.getVoices();
   if (!voices.length) {
-    setTimeout(function() { voices = window.speechSynthesis.getVoices(); }, 100);
+    setTimeout(function() { speakGerman(text); }, 200);
+    return;
   }
   var deVoice = voices.find(function(v) { return v.lang === 'de-DE'; }) ||
                 voices.find(function(v) { return v.lang === 'de-AT'; }) ||
@@ -95,6 +96,9 @@ function speakGerman(text) {
 
   if (deVoice) {
     u.voice = deVoice;
+  }
+  if (!deVoice) {
+    console.warn('TTS: no German voice found. Available:', voices.map(function(v) { return v.name + ' (' + v.lang + ')'; }));
   }
 
   window.speechSynthesis.speak(u);
