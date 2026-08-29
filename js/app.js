@@ -76,6 +76,49 @@ function _ttsToast(msg) {
   t._h = setTimeout(function() { t.style.opacity = '0'; }, 3500);
 }
 
+var _germanVoicesCache = null;
+
+function _loadGermanVoices() {
+  if (_germanVoicesCache) return _germanVoicesCache;
+  var voices = window.speechSynthesis.getVoices();
+  var germans = voices.filter(function(v) { return (v.lang || '').toLowerCase().indexOf('de') === 0; });
+  germans.sort(function(a, b) { return (b.localService ? 1 : 0) - (a.localService ? 1 : 0); });
+  _germanVoicesCache = germans;
+  return germans;
+}
+
+function _playUtterance(text, voice, okCallback, failCallback) {
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE';
+  u.rate = 0.85;
+  u.pitch = 1;
+  u.volume = 1;
+  if (voice) {
+    u.voice = voice;
+    try { u.lang = voice.lang || u.lang; } catch(e) {}
+  }
+  var started = false;
+  var timer = setTimeout(function() {
+    if (!started) {
+      u.onend = null; u.onerror = null; u.onstart = null;
+      if (failCallback) failCallback(voice);
+    }
+  }, 4000);
+  u.onstart = function() {
+    started = true;
+    if (okCallback) okCallback(voice);
+  };
+  u.onend = function() {
+    clearTimeout(timer);
+    if (started && okCallback) okCallback(voice);
+  };
+  u.onerror = function(e) {
+    clearTimeout(timer);
+    if (failCallback) failCallback(voice, e.error);
+  };
+  window.speechSynthesis.speak(u);
+}
+
 function speakGerman(text) {
   if (!text || !text.trim()) return;
   text = text.trim();
@@ -86,50 +129,33 @@ function speakGerman(text) {
   }
 
   window.speechSynthesis.cancel();
+  window.speechSynthesis.getVoices(); // refresh
 
-  var voices = window.speechSynthesis.getVoices();
-  if (!voices.length) {
+  var germans = _loadGermanVoices();
+  if (!germans.length) {
     _ttsToast('⚠️ جاري تحميل الأصوات، اضغط تاني...');
-    setTimeout(function() { speakGerman(text); }, 250);
+    setTimeout(function() { _germanVoicesCache = null; speakGerman(text); }, 300);
     return;
   }
 
-  // Prefer a LOCAL (offline) German voice first — more reliable, no internet needed.
-  var germans = voices.filter(function(v) { return (v.lang || '').toLowerCase().indexOf('de') === 0; });
-  var deVoice =
-    germans.find(function(v) { return v.localService; }) ||
-    germans.find(function(v) { return v.lang === 'de-DE'; }) ||
-    germans.find(function(v) { return v.lang === 'de-AT'; }) ||
-    germans[0];
+  // Try every German voice (local first) until one actually produces sound.
+  var idx = 0;
+  // Guard: try local-only first so we don't wait on slow online voices.
+  var locals = germans.filter(function(v) { return v.localService; });
+  var order = locals.length ? locals : germans;
 
-  var u = new SpeechSynthesisUtterance(text);
-  u.lang = 'de-DE';
-  u.rate = 0.85;
-  u.pitch = 1;
-  u.volume = 1;
-  if (deVoice) u.voice = deVoice;
-
-  if (!deVoice) {
-    _ttsToast('⚠️ لا يوجد صوت ألماني. ثبّت حزمة الصوت الألماني من إعدادات ويندوز.');
-    console.warn('TTS: no German voice found. Available:', voices.map(function(v) { return v.name + ' (' + v.lang + ', local=' + v.localService + ')'; }));
-    return;
-  }
-
-  _ttsToast('🔊 ' + deVoice.name);
-  u.onerror = function(e) {
-    _ttsToast('⚠️ خطأ في النطق: ' + (e.error || 'غير معروف'));
-  };
-  window.speechSynthesis.speak(u);
-
-  // Chrome bug: restart speech every 10s so it doesn't stop
-  var _ttsRestart = setInterval(function() {
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.pause();
-      window.speechSynthesis.resume();
-    } else {
-      clearInterval(_ttsRestart);
+  function tryNext() {
+    if (idx >= order.length) {
+      _ttsToast('⚠️ الأصوات الألمانية متوقفة. تأكد من إنترنتك أو ثبّت صوت ألماني من إعدادات ويندوز ثم أعد تشغيل المتصفح.');
+      return;
     }
-  }, 10000);
+    var voice = order[idx++];
+    _ttsToast('🔊 ' + voice.name + (voice.localService ? ' (محلي)' : ' (أونلاين)'));
+    _playUtterance(text, voice, function() {}, function() {
+      tryNext();
+    });
+  }
+  tryNext();
 }
 
 if ('speechSynthesis' in window) {
