@@ -119,7 +119,7 @@ function _playUtterance(text, voice, okCallback, failCallback) {
   window.speechSynthesis.speak(u);
 }
 
-function speakGerman(text) {
+function speakGerman(text, btnId) {
   if (!text || !text.trim()) return;
   text = text.trim();
 
@@ -128,35 +128,42 @@ function speakGerman(text) {
     return;
   }
 
+  var btn = btnId ? document.getElementById(btnId) : null;
+  if (btn) { btn.classList.add('playing'); btn.innerHTML = ICONS.pause; }
+
   window.speechSynthesis.cancel();
   window.speechSynthesis.getVoices(); // refresh
 
   var germans = _loadGermanVoices();
   if (!germans.length) {
     _ttsToast('⚠️ جاري تحميل الأصوات، اضغط تاني...');
-    setTimeout(function() { _germanVoicesCache = null; speakGerman(text); }, 300);
+    if (btn) { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; }
+    setTimeout(function() { _germanVoicesCache = null; speakGerman(text, btnId); }, 300);
     return;
   }
 
   // Try every German voice (local first) until one actually produces sound.
   var idx = 0;
-  // Guard: try local-only first so we don't wait on slow online voices.
   var locals = germans.filter(function(v) { return v.localService; });
   var order = locals.length ? locals : germans;
 
   function tryNext() {
     if (idx >= order.length) {
       _ttsToast('⚠️ الأصوات الألمانية متوقفة. تأكد من إنترنتك أو ثبّت صوت ألماني من إعدادات ويندوز ثم أعد تشغيل المتصفح.');
+      if (btn) { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; }
       return;
     }
     var voice = order[idx++];
     _ttsToast('🔊 ' + voice.name + (voice.localService ? ' (محلي)' : ' (أونلاين)'));
-    _playUtterance(text, voice, function() {}, function() {
+    _playUtterance(text, voice, function() {
+      if (btn) { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; }
+    }, function() {
       tryNext();
     });
   }
   tryNext();
 }
+
 
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = function() {
@@ -331,22 +338,7 @@ function setListenLevel(level, btn) {
   btn.classList.add('active');
   renderListening();
 }
-function speakGerman(text, btnId) {
-  const btn = document.getElementById(btnId);
-  if (!('speechSynthesis' in window)) {
-    alert('متصفحك مش بيدعم خاصية النطق. جرّب Chrome.');
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'de-DE';
-  utter.rate = 0.85;
-  btn.classList.add('playing');
-  btn.innerHTML = ICONS.pause;
-  utter.onend = () => { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; };
-  utter.onerror = () => { btn.classList.remove('playing'); btn.innerHTML = ICONS.play; };
-  window.speechSynthesis.speak(utter);
-}
+
 function toggleListenAr(id) {
   document.getElementById('lar_' + id).classList.toggle('shown');
 }
