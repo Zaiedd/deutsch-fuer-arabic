@@ -62,9 +62,10 @@ function switchPage(name) {
   if (name === 'mywords' && !mywordsInit) { renderMyWords(); mywordsInit = true; }
   if (name === 'dashboard' && !dashInit) { Dashboard.render('dashboardArea'); dashInit = true; }
   if (name === 'path' && !pathInit) { LearningPath.render('learningPathArea'); pathInit = true; }
+  if (name === 'courses' && !coursesInit) { renderCourses(); coursesInit = true; }
 }
 let gramInit=false, listenInit=false, readInit=false, blogInit=false;
-let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, pathInit=false;
+let quizInit=false, flashcardInit=false, mywordsInit=false, dashInit=false, pathInit=false, coursesInit=false;
 
 // ============ VOCAB PAGE (existing) ============
 function _ttsToast(msg) {

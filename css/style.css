@@ -334,6 +334,25 @@ body.no-scroll{overflow:hidden}
   .ai-fab{width:54px;height:54px}
 }
 
+/* ============ صفحة الكورسات ============ */
+.courses-intro{max-width:800px;margin:0 auto 28px;text-align:center;color:var(--text2);font-size:14px;line-height:1.7}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.course-card{background:#fff;border:1.5px solid var(--gray2);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:all .2s;animation:fadeInUp .45s cubic-bezier(.2,.7,.2,1) both}
+.course-card:hover{border-color:var(--red);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.09)}
+.course-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.course-badge{background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.course-level{background:var(--gray1);border:1px solid var(--gray2);color:var(--text2);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+.course-name{font-size:18px;font-weight:700;color:var(--black);margin:0}
+.course-provider{font-size:12px;color:var(--text2);line-height:1.5}
+.course-desc{font-size:13px;color:var(--text2);line-height:1.7;flex:1}
+.course-action{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:14px;border-top:1px solid var(--gray2);color:var(--red);font-size:14px;font-weight:600}
+.course-action svg{transition:transform .2s}
+.course-card:hover .course-action svg{transform:translateX(-4px)}
+[data-theme="dark"] .course-card{background:#1e1e1e;border-color:#333}
+[data-theme="dark"] .course-name{color:#e0e0e0 !important}
+[data-theme="dark"] .course-provider,[data-theme="dark"] .course-desc{color:#a0a0a0 !important}
+[data-theme="dark"] .course-level{background:#2a2a2a;border-color:#3a3a3a;color:#a0a0a0}
+[data-theme="dark"] .course-card:hover{box-shadow:0 10px 28px rgba(0,0,0,.4)}
 /* ============ نظام الكويز ============ */
 .quiz-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-width:800px;margin:32px auto;padding:0 16px}
 .quiz-type-card{background:#fff;border:1.5px solid var(--gray2);border-radius:var(--radius);padding:24px 16px;text-align:center;cursor:pointer;transition:all .2s;font-family:inherit}

@@ -28,6 +28,7 @@
     <button id="navBtn-dashboard" onclick="switchPage('dashboard')">لوحة التقدم</button>
     <button id="navBtn-path" onclick="switchPage('path')">مسار التعلم</button>
     <button id="navBtn-placement" onclick="switchPage('placement')">اختبار المستوى</button>
+    <button id="navBtn-courses" onclick="switchPage('courses')">كورسات</button>
   </div>
   <div class="nav-actions">
     <button class="nav-settings-btn" onclick="toggleSettings()" title="الإعدادات" aria-label="الإعدادات">
@@ -266,6 +267,15 @@
   <div id="learningPathArea" style="max-width:800px;margin:0 auto;padding:32px 16px"></div>
 </div>
 
+<div class="page" id="page-courses">
+  <div class="page-banner">
+    <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+    <h1>كورسات الألمانية</h1>
+    <p>أفضل الكورسات المجانية المعتمدة لتعلّم الألماني من الصفر حتى الاحتراف</p>
+  </div>
+  <div id="coursesArea" style="max-width:1100px;margin:0 auto;padding:32px 16px"></div>
+</div>
+
 <div class="page" id="page-placement">
   <div class="page-banner">
     <div class="page-banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
@@ -373,5 +383,6 @@
 <script src="js/flashcards.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/learning-path.js"></script>
+<script src="js/courses.js"></script>
 </body>
 </html>
