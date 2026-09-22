@@ -179,11 +179,16 @@ let learnedWords = {};
 try { learnedWords = JSON.parse(localStorage.getItem('dfa_learned') || '{}'); } catch(e){}
 
 function setVocabLevel(level, btn) {
+  changeVocabLevel(level, btn);
+}
+
+function changeVocabLevel(level, btn) {
   currentLevel = level;
   currentCat = null;
   document.querySelectorAll('#vocabLevelTabs .level-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('searchInput').value = '';
+  const search = document.getElementById('searchInput');
+  if (search) search.value = '';
   renderCats();
   renderWords();
   updateProgress();
@@ -207,6 +212,126 @@ function renderCats() {
     };
     grid.appendChild(btn);
   });
+}
+
+// ============ HOME PAGE (landing) ============
+const HOME_LEVEL_NAMES = { A1:'مبتدئ', A2:'أساسي', B1:'متوسط', B2:'متوسط متقدم', C1:'متقدم', C2:'إتقان' };
+
+function computeHomeStats() {
+  const levels = Object.keys(DATA);
+  const allCats = new Set();
+  let words = 0;
+  levels.forEach(l => {
+    Object.keys(DATA[l].categories).forEach(c => allCats.add(c));
+    words += Object.values(DATA[l].categories).flat().length;
+  });
+  return { levels: levels.length, words: words, cats: allCats.size };
+}
+
+function _findLevelTab(level) {
+  const lv = String(level).toUpperCase();
+  let found = null;
+  document.querySelectorAll('#vocabLevelTabs .level-tab').forEach(function(b) {
+    const badge = b.querySelector('.level-badge');
+    if (badge && badge.textContent.trim().toUpperCase() === lv) found = b;
+  });
+  return found;
+}
+
+function startLearning() {
+  goLearn();
+}
+
+function goLearn() {
+  const el = document.getElementById('learnStart');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function goLevel(level) {
+  const lv = String(level).toUpperCase();
+  const btn = _findLevelTab(lv);
+  if (btn) changeVocabLevel(lv, btn);
+  goLearn();
+}
+
+function goCat(cat) {
+  const btn = _findLevelTab('A1');
+  if (btn) changeVocabLevel('A1', btn);
+  currentCat = cat;
+  const search = document.getElementById('searchInput');
+  if (search) search.value = '';
+  renderCats();
+  renderWords();
+  updateProgress();
+  goLearn();
+}
+
+function renderHome() {
+  const stats = computeHomeStats();
+  const statsGrid = document.getElementById('homeStatsGrid');
+  if (statsGrid) {
+    statsGrid.innerHTML = [
+      '<div class="hero-stat"><strong>' + stats.words + '</strong><span>كلمة</span></div>',
+      '<div class="hero-stat"><strong>' + stats.levels + '</strong><span>مستويات</span></div>',
+      '<div class="hero-stat"><strong>' + stats.cats + '</strong><span>تصنيف</span></div>'
+    ].join('');
+  }
+
+  const levelGrid = document.getElementById('homeLevelGrid');
+  if (levelGrid) {
+    levelGrid.innerHTML = Object.keys(DATA).map(l => {
+      const cats = Object.keys(DATA[l].categories);
+      const wcount = Object.values(DATA[l].categories).flat().length;
+      return '<button class="home-level-card" data-level="' + l + '">' +
+        '<span class="home-level-badge">' + l + '</span>' +
+        '<span class="home-level-name">' + (HOME_LEVEL_NAMES[l] || l) + '</span>' +
+        '<span class="home-level-meta">' + cats.length + ' تصنيف · ' + wcount + ' كلمة</span>' +
+      '</button>';
+    }).join('');
+    levelGrid.querySelectorAll('.home-level-card').forEach(card => {
+      card.addEventListener('click', function() { goLevel(card.getAttribute('data-level')); });
+    });
+  }
+
+  const catGrid = document.getElementById('homeCatGrid');
+  if (catGrid) {
+    catGrid.innerHTML = Object.keys(DATA.A1.categories).map(cat => {
+      const icon = [...cat].find(c => c.codePointAt(0) > 127 && !/[\u0600-\u06FF]/.test(c)) || '📁';
+      const label = cat.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'').replace(/[^\u0600-\u06FF\s]/g,'').trim() || cat;
+      return '<button class="home-cat-card" data-cat="' + cat + '">' +
+        '<span class="home-cat-icon">' + icon + '</span>' +
+        '<span class="home-cat-name">' + label + '</span>' +
+      '</button>';
+    }).join('');
+    catGrid.querySelectorAll('.home-cat-card').forEach(card => {
+      card.addEventListener('click', function() { goCat(card.getAttribute('data-cat')); });
+    });
+  }
+
+  const featGrid = document.getElementById('homeFeatureGrid');
+  if (featGrid) {
+    const features = [
+      { icon: ICONS.bookOpen, title: 'مفردات مصنفة', desc: stats.words + ' كلمة في ' + stats.cats + ' تصنيف عملي', page: null },
+      { icon: ICONS.tag, title: 'المادة der/die/das', desc: 'لون مختلف لكل مادة لتحفظها بسهولة', page: null },
+      { icon: ICONS.chat, title: 'أمثلة في الجمل', desc: 'كل كلمة مع مثال عملي يوضّح استخدامها', page: null },
+      { icon: ICONS.pen, title: 'قواعد مبسطة', desc: 'شرح القواعد بالعربية خطوة بخطوة', page: 'grammar' },
+      { icon: ICONS.library, title: 'قراءة', desc: 'نصوص مختارة تناسب مستواك', page: 'reading' },
+      { icon: ICONS.target, title: 'اختبار نفسك', desc: 'كويزات بعد كل مستوى', page: 'quiz' }
+    ];
+    featGrid.innerHTML = features.map(f => {
+      return '<button class="home-feature-card" data-page="' + (f.page || '') + '">' +
+        '<div class="home-feature-icon">' + f.icon + '</div>' +
+        '<h4 class="home-feature-title">' + f.title + '</h4>' +
+        '<p class="home-feature-desc">' + f.desc + '</p>' +
+      '</button>';
+    }).join('');
+    featGrid.querySelectorAll('.home-feature-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const page = card.getAttribute('data-page');
+        if (page) switchPage(page); else goLearn();
+      });
+    });
+  }
 }
 
 function getWords() {
@@ -832,6 +957,7 @@ function resetData() {
 }
 
 // ============ INIT ============
+renderHome();
 renderCats();
 renderWords();
 updateProgress();

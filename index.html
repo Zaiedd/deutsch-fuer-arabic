@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>تعلم الألمانية بالعربية | Deutsch für Araber</title>
+<meta name="theme-color" content="#141414">
+<meta name="description" content="تعلّم الألمانية بالعربية خطوة بخطوة: مفردات، قواعد، استماع، قراءة، كويزات وبطاقات تعليمية — من A1 إلى C2.">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=UnifrakturMaguntia&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -42,21 +48,61 @@
 <div class="nav-overlay" id="navOverlay"></div>
 
 <div class="page active" id="page-vocab">
-<section class="hero">
-  <div class="hero-de">Deutsch lernen</div>
-  <div class="hero-ar">تعلّم الألمانية بطريقة احترافية</div>
-  <div class="hero-stats">
-    <div class="hero-stat"><strong>261</strong><span>كلمة</span></div>
-    <div class="hero-stat"><strong>6</strong><span>مستويات</span></div>
-    <div class="hero-stat"><strong>23</strong><span>تصنيف</span></div>
-  </div>
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="document.querySelector('#page-vocab .levels-section').scrollIntoView({behavior:'smooth'})">ابدأ التعلم الآن</button>
-    <button class="btn-secondary" onclick="switchPage('listening')">دروس الاستماع</button>
+<section class="hero home-hero" id="homeHero">
+  <div class="hero-float hero-float-1" aria-hidden="true">Ä</div>
+  <div class="hero-float hero-float-2" aria-hidden="true">Ö</div>
+  <div class="hero-float hero-float-3" aria-hidden="true">Ü</div>
+  <div class="hero-float hero-float-4" aria-hidden="true">ß</div>
+  <div class="hero-inner">
+    <div class="hero-brand" id="heroBrand">
+      <img src="assets/logoo-full.jpg" alt="Deutsch für Araber" class="hero-brand-img" id="heroLogo">
+    </div>
+    <div class="hero-eyebrow">Deutsch für Araber</div>
+    <h1 class="hero-de">Deutsch lernen</h1>
+    <p class="hero-ar">تعلّم الألمانية بطريقة بسيطة واحترافية، خطوة بخطوة.</p>
+    <p class="hero-sub">Lernen Sie die deutsche Sprache mit Leichtigkeit.</p>
+    <div class="hero-stats" id="homeStatsGrid" role="list"></div>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="startLearning()">ابدأ التعلم الآن</button>
+      <button class="btn-secondary" onclick="switchPage('listening')">دروس الاستماع</button>
+    </div>
   </div>
 </section>
 
-<div class="features">
+<section class="home-path" id="homePath">
+  <h2 class="section-title">ابدأ رحلتك في تعلم الألمانية</h2>
+  <p class="section-sub">اختر مستواك من الإطار الأوروبي المرجعي (CEFR) وابدأ بألوان مريحة</p>
+  <div class="home-level-grid" id="homeLevelGrid"></div>
+</section>
+
+<section class="home-cats">
+  <h2 class="section-title">استكشف الكلمات الألمانية</h2>
+  <p class="section-sub">ابدأ بتصنيفات المستوى الأول ثم تدرج بنفسك</p>
+  <div class="home-cat-grid" id="homeCatGrid"></div>
+</section>
+
+<section class="home-listen">
+  <div class="home-listen-inner">
+    <div class="home-listen-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4.5" height="6" rx="1.5"/><rect x="16.5" y="14" width="4.5" height="6" rx="1.5"/></svg></div>
+    <h2>طوّر مهارة الاستماع</h2>
+    <p>استمع إلى الألمانية وتدرّب على فهم النطق والكلمات بطريقة عملية</p>
+    <button class="btn-primary" onclick="switchPage('listening')">ابدأ دروس الاستماع</button>
+  </div>
+</section>
+
+<section class="home-features" id="homeFeatures">
+  <h2 class="section-title">كل اللي محتاجه لتعلّم فعال</h2>
+  <p class="section-sub">أدوات حقيقية داخل الموقع — بدون حشو</p>
+  <div class="home-feature-grid" id="homeFeatureGrid"></div>
+</section>
+
+<section class="home-cta" id="homeCta">
+  <h2>مستعد تبدأ الألمانية؟</h2>
+  <p>ابدأ الآن وتعلّم كلمات جديدة خطوة بخطوة، بدون تعقيد.</p>
+  <button class="btn-primary" onclick="startLearning()">ابدأ التعلم الآن</button>
+</section>
+
+<div class="features" id="homeLegacyFeatures" style="display:none">
   <div class="features-grid">
     <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg></div><div class="feature-text"><h4>مرتبة بالمستوى</h4><p>من مبتدئ A1 حتى إتقان C2 حسب الإطار الأوروبي</p></div></div>
     <div class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12.6 3.5h5.9a2 2 0 0 1 2 2v5.9a2 2 0 0 1-.59 1.41l-8 8a2 2 0 0 1-2.82 0l-5.9-5.9a2 2 0 0 1 0-2.82l8-8a2 2 0 0 1 1.41-.59z"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="feature-text"><h4>المادة (der/die/das)</h4><p>لون مختلف لكل مادة عشان تحفظها بسهولة</p></div></div>
@@ -65,7 +111,7 @@
   </div>
 </div>
 
-<section class="levels-section">
+<section class="levels-section" id="learnStart">
   <h2 class="section-title">اختر مستواك</h2>
   <p class="section-sub">الإطار الأوروبي المرجعي العام للغات (CEFR)</p>
   <div class="level-tabs" id="vocabLevelTabs">
